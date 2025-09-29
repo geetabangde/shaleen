@@ -8,13 +8,13 @@ use App\Models\Purchase;
 use App\Models\Admin;
 use App\Models\Bag;
 use App\Models\Sale;
+use App\Models\SubSale;
 use Illuminate\Support\Str;
 class SaleController extends Controller
 {
     public function index()
     {
-        $sales = Sale::latest()->get();
-        
+        $sales = Sale::with('subSales')->latest()->get();
         return view('admin.sale.index',compact('sales'));
     }
     public function create()
@@ -127,7 +127,6 @@ class SaleController extends Controller
         ->with('success', 'Sale updated successfully!');
     }
 
-
     public function show($id)
     {
         $sale = Sale::with(['broker', 'partyname', 'beg'])->findOrFail($id);
@@ -150,5 +149,33 @@ class SaleController extends Controller
         // Redirect back with a success message
         return redirect()->back()->with('success', 'Sale deleted successfully!');
     }
+
+    public function subSaleStore(Request $request, $id)
+   {
+        $request->validate([
+            'quantity'   => 'required|numeric|min:0.01',
+            'sale_price' => 'required|numeric|min:0.01',
+        ]);
+
+        $sale = Sale::findOrFail($id);
+
+        if ($request->quantity > $sale->quantity) {
+            return back()->withErrors(['quantity' => 'Quantity exceeds available stock']);
+        }
+
+        // Reduce main sale quantity
+        $sale->quantity -= $request->quantity;
+        $sale->save();
+
+        // Store sub-sale
+        SubSale::create([
+            'sale_id'    => $sale->id,
+            'quantity'   => $request->quantity,
+            'sale_price' => $request->sale_price,
+        ]);
+        return redirect()->route('admin.sale.view', $sale->id)
+                 ->with('success', 'Sale contract saved successfully!');
+   }
+
 
 }

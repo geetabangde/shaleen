@@ -47,6 +47,12 @@ class Sale extends Model
         return $this->belongsTo(Bag::class, 'seller_name'); 
     }
 
+     public function subSales()
+    {
+        return $this->hasMany(SubSale::class);
+    }
+
+
     
     
 }

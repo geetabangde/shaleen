@@ -130,7 +130,6 @@
                                        @error('remark') <div class="invalid-feedback">{{ $message }}</div> @enderror
                                     </div>
                               </div>
-
                               <div class="row mt-4">
                                     <div class="col-12 text-end">
                                        <button type="submit" class="btn btn-primary">Save Sale</button>

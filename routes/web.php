@@ -50,6 +50,7 @@ Route::prefix('admin')->group(function () {
         Route::post('update/{id}', [PurchaseController::class, 'update'])->name('update');
         Route::post('update-status/{id}', [PurchaseController::class, 'updateStatus'])->name('statusupdate');
     });
+
     // Sale
     Route::prefix('sale')->name('admin.sale.')->group(function () {
         Route::get('/', [SaleController::class, 'index'])->name('index');
@@ -59,8 +60,7 @@ Route::prefix('admin')->group(function () {
         Route::get('delete/{id}', [SaleController::class, 'destroy'])->name('delete');
         Route::post('store', [SaleController::class, 'store'])->name('store');
         Route::post('update/{id}', [SaleController::class, 'update'])->name('update');
-        Route::get('/sub-sale/{id}', [SaleController::class, 'SubSale'])->name('subSalecreate');
-
+        Route::post('sub-sale-store/{id}', [SaleController::class, 'subSaleStore'])->name('subSale.store');
     });
 
     // Bags

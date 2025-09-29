@@ -32,20 +32,7 @@
 
 <div class="page-content">
 <div class="container-fluid">
-   <!-- start page title -->
-   <div class="row">
-      <div class="col-12">
-         <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-            <h4 class="mb-sm-0 font-size-18">Sales </h4>
-            <div class="page-title-right">
-               <ol class="breadcrumb m-0">
-                  <li class="breadcrumb-item"><a href="javascript:void(0);">Dashboard</a></li>
-                  <li class="breadcrumb-item active">Sales</li>
-               </ol>
-            </div>
-         </div>
-      </div>
-   </div>
+   
    <!-- Ledger Listing Page -->
    <div class="row">
       <div class="col-12">
@@ -56,11 +43,10 @@
             </div>
             <div class="card-body">
                <div class="table-rep-plugin">
-                  <div class="table-responsive mb-0" data-pattern="priority-columns">
-                     <table id="" class="table table-bordered dt-responsive nowrap w-100">
+                  <div class="table-responsive mb-0" >
+                     <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
                         <thead>
                            <tr>
-                              
                               <th>#</th>
                               <th>Date</th>
                               <th>Order ID</th>
@@ -97,37 +83,31 @@
                            <tr class="collapse" id="nestedTable{{ $sale->id }}">
                               <td colspan="11">
                                  <div class="p-3 nested-table-container">
-                                    <h6 class="mb-3">Order Details for {{ $sale->sales_order_id }}</h6>
-                                    <table class="table table-bordered table-striped mb-0" id="datatable-buttons">
-                                       <thead class="table-light">
-                                          <tr>
-                                             <th>#</th>
-                                             <th>Sub Order</th>
-                                             <th>Quantity</th>
-                                             <th>Rate</th>
-                                             <th>Amount</th>
-                                             <th>Status</th>
-                                          </tr>
-                                       </thead>
-                                       <tbody>
-                                          <tr>
-                                             <td>1</td>
-                                             <td>SO-001</td>
-                                             <td>100 KG</td>
-                                             <td>₹50/KG</td>
-                                             <td>₹5,000</td>
-                                             <td><span class="badge bg-success">Completed</span></td>
-                                          </tr>
-                                          <tr>
-                                             <td>2</td>
-                                             <td>SO-002</td>
-                                             <td>50 KG</td>
-                                             <td>₹55/KG</td>
-                                             <td>₹2,750</td>
-                                             <td><span class="badge bg-warning">Pending</span></td>
-                                          </tr>
-                                       </tbody>
-                                    </table>
+                                       <h6 class="mb-3">Order Details for {{ $sale->sales_order_id }}</h6>
+                                       <table class="table table-bordered table-striped mb-0">
+                                          <thead class="table-light">
+                                             <tr>
+                                                   <th>#</th>
+                                                   <th>Sub Order Id</th>
+                                                   <th>Quantity</th>
+                                                   <th>Rate</th>
+                                             </tr>
+                                          </thead>
+                                          <tbody>
+                                             @forelse($sale->subSales as $subSale)
+                                                   <tr>
+                                                      <td>{{ $loop->iteration }}</td>
+                                                      <td>SO-{{ $sale->id }}-{{ $subSale->id }}</td>
+                                                      <td>{{ $subSale->quantity }}</td>
+                                                      <td>₹{{ number_format($subSale->sale_price, 2) }}</td>
+                                                   </tr>
+                                             @empty
+                                                   <tr>
+                                                      <td colspan="4" class="text-center text-muted">No Sub-Sales found</td>
+                                                   </tr>
+                                             @endforelse
+                                          </tbody>
+                                       </table>
                                  </div>
                               </td>
                            </tr>
@@ -162,41 +142,7 @@ function toggleArrow(element) {
     }
 }
 
-// DataTables configuration with proper settings
-$(document).ready(function() {
-    $('#datatable-buttons').DataTable({
-        dom: 'Bfrtip',
-        buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
-        ],
-        responsive: true,
-        columnDefs: [
-            {
-                targets: [0], // Expand column
-                orderable: false,
-                searchable: false
-            },
-            {
-                targets: [-1], // Actions column
-                orderable: false,
-                searchable: false
-            }
-        ],
-        order: [[1, 'asc']], // Order by serial number
-        pageLength: 25,
-        language: {
-            search: "Search Sales:",
-            lengthMenu: "Show _MENU_ entries per page",
-            info: "Showing _START_ to _END_ of _TOTAL_ sales",
-            paginate: {
-                first: "First",
-                last: "Last",
-                next: "Next",
-                previous: "Previous"
-            }
-        }
-    });
-});
+
 
 // Bootstrap collapse events
 document.addEventListener('DOMContentLoaded', function() {
@@ -228,5 +174,5 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
-
 @endsection
+

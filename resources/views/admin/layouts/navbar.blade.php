@@ -55,7 +55,7 @@
             <i data-feather="sun" class="icon-lg layout-mode-light"></i>
             </button>
          </div>
-         <div class="dropdown d-inline-block">
+         <!-- <div class="dropdown d-inline-block">
             <button type="button" class="btn header-item noti-icon position-relative" id="page-header-notifications-dropdown"
                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i data-feather="bell" class="icon-lg"></i>
@@ -141,15 +141,15 @@
                   </a>
                </div>
             </div>
-         </div>
+         </div> -->
          <div class="dropdown d-inline-block">
             <button type="button" class="btn header-item bg-light-subtle border-start border-end" id="page-header-user-dropdown"
                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <img class="rounded-circle header-profile-user"
+            <!-- <img class="rounded-circle header-profile-user"
                src="{{ Auth::guard('admin')->user()->image
                ? asset('storage/' . Auth::guard('admin')->user()->image)
                : asset('backend/images/logo/logotitleshaleen.jpg') }}"
-               alt="Header Avatar">
+               alt="Header Avatar"> -->
             <span class="d-none d-xl-inline-block ms-1 fw-medium">{{ auth()->guard('admin')->user()->email }}</span>
             <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
             </button>
