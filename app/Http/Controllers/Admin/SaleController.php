@@ -9,6 +9,7 @@ use App\Models\Admin;
 use App\Models\Bag;
 use App\Models\Sale;
 use App\Models\SubSale;
+
 use Illuminate\Support\Str;
 class SaleController extends Controller
 {
@@ -40,7 +41,16 @@ class SaleController extends Controller
             return in_array('broker', $types ?? []);
         });
 
-        return view('admin.sale.create',compact('buyers','sellers','brokers','begs'));
+        // ✅ Destinations decode kar ke
+        $destinations = Admin::all()->mapWithKeys(function($admin){
+        $addresses = json_decode($admin->address, true);
+            if(!empty($addresses) && isset($addresses[0]['consignment_address'])){
+                return [$admin->id => $addresses[0]['consignment_address']];
+            }
+            return [];
+        });
+
+        return view('admin.sale.create',compact('buyers','sellers','brokers','begs','destinations'));
     }
 
      // Store new sale from request
@@ -130,8 +140,18 @@ class SaleController extends Controller
     public function show($id)
     {
         $sale = Sale::with(['broker', 'partyname', 'beg'])->findOrFail($id);
-        return view('admin.sale.view', compact('sale'));
+
+        // ✅ Destinations decode kar ke
+        $destinations = Admin::all()->mapWithKeys(function($admin){
+        $addresses = json_decode($admin->address, true);
+            if(!empty($addresses) && isset($addresses[0]['consignment_address'])){
+                return [$admin->id => $addresses[0]['consignment_address']];
+            }
+            return [];
+        });
+        return view('admin.sale.view', compact('sale','destinations'));
     }
+
     public function SubSale($id)
     {
         $sale = Sale::with(['broker', 'partyname', 'beg'])->findOrFail($id);
@@ -172,7 +192,21 @@ class SaleController extends Controller
             'sale_id'    => $sale->id,
             'quantity'   => $request->quantity,
             'sale_price' => $request->sale_price,
+            'mode_terms_of_payment' => $request->mode_terms_of_payment,
+            'dispatch_doc_no' => $request->dispatch_doc_no,
+            'delivery_note_date' => $request->delivery_note_date,
+            'dispatched_through' => $request->dispatched_through,
+            'motor_vehicle_no' => $request->motor_vehicle_no,
+            'terms_of_delivery' => $request->terms_of_delivery,
+            'delivery_note' => $request->delivery_note,
+            'reference_no' => $request->reference_no,
+            'other_references' => $request->other_references,
+            'buyer_order_no' => $request->buyer_order_no,
+            'dated' => $request->dated,
+            'destination' => $request->destination,
+            'bill_lr_no' => $request->bill_lr_no,
         ]);
+        
         return redirect()->route('admin.sale.view', $sale->id)
                  ->with('success', 'Sale contract saved successfully!');
    }

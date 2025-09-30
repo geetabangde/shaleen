@@ -28,12 +28,12 @@ class LedgerMasterController extends Controller
         $validated = $request->validate([
             'name'            => 'required',
             'email'           => 'required|email|unique:admins,email',
-           'password'           => 'required|string|min:6|confirmed',
-           'password_confirmation' => 'required|string|min:6',
+            'password'           => 'required|string|min:6|confirmed',
+            'password_confirmation' => 'required|string|min:6',
             'contact_number'  => 'required|string|max:15',
             'pan_number'      => 'nullable|string|max:20',
             'tan_number'      => 'nullable|string|max:20',
-             'types' => 'required|array',
+            'types' => 'required|array',
             'types.*' => 'in:seller,buyer,broker',
             'image'         => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'bank_name'       => 'nullable|string|max:255',
@@ -45,6 +45,7 @@ class LedgerMasterController extends Controller
             'address.*.state'     => 'required|string|max:100',
             'address.*.country'   => 'required|string|max:100',
         ]);
+        
         $imagePath = null;
             if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('profile_images', 'public');
