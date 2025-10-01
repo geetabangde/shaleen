@@ -19,6 +19,9 @@ class CreateSubSalesTable extends Migration
             $table->string('dispatched_through')->nullable()->after('delivery_note_date');
             $table->string('motor_vehicle_no')->nullable()->after('dispatched_through');
             $table->string('terms_of_delivery')->nullable()->after('motor_vehicle_no');
+            $table->string('unit')->nullable()->after('unit');
+            $table->string('invoice_no')->nullable()->after('id');
+            $table->date('invoice_date')->nullable()->after('invoice_no');
             $table->timestamps();
         });
     }

@@ -66,16 +66,21 @@
                                        </select>
                                        @error('party_name') <div class="invalid-feedback">{{ $message }}</div> @enderror
                                     </div>
-
                                     <!-- Item -->
                                     <div class="col-md-6">
-                                       <label for="item" class="form-label">Item <span class="text-danger">*</span></label>
-                                       <input type="text" name="item" id="item"
-                                             class="form-control @error('item') is-invalid @enderror"
-                                             value="{{ old('item', $sale->item) }}">
-                                       @error('item') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                       <label for="item_id" class="form-label">Item <span class="text-danger">*</span></label>
+                                       <select name="item_id" id="item_id" 
+                                                class="form-control @error('item_id') is-invalid @enderror">
+                                          <option value="">-- Select Item --</option>
+                                          @foreach($items as $item)
+                                                <option value="{{ $item->id }}" 
+                                                   {{ old('item_id', $sale->item_id ?? '') == $item->id ? 'selected' : '' }}>
+                                                   {{ $item->item_name }}
+                                                </option>
+                                          @endforeach
+                                       </select>
+                                       @error('item_id') <div class="invalid-feedback">{{ $message }}</div> @enderror
                                     </div>
-
                                     <!-- Quantity -->
                                     <div class="col-md-6">
                                        <label for="quantity" class="form-label">Quantity <span class="text-danger">*</span></label>

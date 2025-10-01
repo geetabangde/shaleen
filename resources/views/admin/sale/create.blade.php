@@ -67,13 +67,26 @@
                                        </div>
 
                                     <!-- Item -->
-                                    <div class="col-md-6">
+                                    <!-- <div class="col-md-6">
                                        <label for="item" class="form-label">Item <span class="text-danger">*</span></label>
                                        <input type="text" name="item" id="item"
                                              class="form-control @error('item') is-invalid @enderror"
                                              value="{{ old('item') }}">
                                        @error('item') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                    </div> -->
+                                    <div class="col-md-6">
+                                       <label class="form-label">Item <span class="text-danger">*</span></label>
+                                       <select name="item_id" class="form-control @error('item') is-invalid @enderror" required>
+                                          <option value="">Select Item</option>
+                                          @foreach($items as $item)
+                                                <option value="{{ $item->id }}" {{ old('item_id') == $item->id ? 'selected' : '' }}>
+                                                   {{ $item->item_name }}
+                                                </option>
+                                          @endforeach
+                                       </select>
+                                       @error('item_id') <div class="invalid-feedback">{{ $message }}</div> @enderror
                                     </div>
+
 
                                     <!-- Quantity -->
                                     <div class="col-md-6">

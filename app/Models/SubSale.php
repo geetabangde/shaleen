@@ -10,6 +10,7 @@ class SubSale extends Model
     'sale_id', 
     'quantity', 
     'sale_price',
+    'unit',
     'mode_terms_of_payment',
     'dispatch_doc_no',
     'delivery_note_date',
@@ -23,6 +24,8 @@ class SubSale extends Model
     'dated',
     'destination',
     'bill_lr_no',
+    'invoice_no', 
+    'invoice_date',
     ];
 
     public function sale()

@@ -9,19 +9,23 @@ use App\Models\Admin;
 use App\Models\Bag;
 use App\Models\Sale;
 use App\Models\SubSale;
-
+use App\Models\ItemMaster;
 use Illuminate\Support\Str;
+
 class SaleController extends Controller
 {
     public function index()
     {
         $sales = Sale::with('subSales')->latest()->get();
+        // return($sales);
         return view('admin.sale.index',compact('sales'));
     }
     public function create()
    {
         $ledgers = Admin::all();
         $begs = Bag::all();
+        $items = ItemMaster::all();
+        
 
         
         $buyers = $ledgers->filter(function($ledger){
@@ -50,7 +54,7 @@ class SaleController extends Controller
             return [];
         });
 
-        return view('admin.sale.create',compact('buyers','sellers','brokers','begs','destinations'));
+        return view('admin.sale.create',compact('buyers','sellers','brokers','begs','destinations','items'));
     }
 
      // Store new sale from request
@@ -62,7 +66,8 @@ class SaleController extends Controller
             // 'sales_order_id' => 'required|string|unique:sales,sales_order_id',
             'broker_name' => 'nullable|string|max:255',
             'party_name' => 'required|string|max:255',
-            'item' => 'required|string|max:255',
+            // 'item' => 'required|string|max:255',
+            'item_id' => 'required|exists:item_masters,id',
             'quantity' => 'required|numeric|min:0',
             'bags' => 'required|integer|min:0',
             'brand' => 'nullable|string|max:255',
@@ -84,10 +89,11 @@ class SaleController extends Controller
 
     public function edit($id)
    {
-    $sale = Sale::findOrFail($id);
+        $sale = Sale::findOrFail($id);
 
         $ledgers = Admin::all();
         $begs = Bag::all();
+        $items = ItemMaster::all(); 
 
         
         $buyers = $ledgers->filter(function($ledger){
@@ -106,7 +112,7 @@ class SaleController extends Controller
             $types = is_array($ledger->types) ? $ledger->types : json_decode($ledger->types, true);
             return in_array('broker', $types ?? []);
         });
-        return view('admin.sale.edit',compact('buyers','sellers','brokers','begs','sale'));
+        return view('admin.sale.edit',compact('buyers','sellers','brokers','begs','sale','items'));
     }
    
     public function update(Request $request, $id)
@@ -120,7 +126,7 @@ class SaleController extends Controller
             // 'sales_order_id' => "required|string|unique:sales,sales_order_id,$id",
             'broker_name' => 'required|exists:admins,id',
             'party_name' => 'required|exists:admins,id',
-            'item' => 'required|string|max:255',
+            'item_id' => 'required|exists:item_masters,id',
             'quantity' => 'required|numeric',
             'bags' => 'required|exists:bags,id',
             'brand' => 'nullable|string|max:255',
@@ -149,7 +155,11 @@ class SaleController extends Controller
             }
             return [];
         });
-        return view('admin.sale.view', compact('sale','destinations'));
+         // Generate invoice number & date for new SubSale
+        $invoice_no = 'INV-' . now()->format('YmdHis') . '-' . Str::upper(Str::random(4));
+        $invoice_date = now()->format('Y-m-d');
+
+        return view('admin.sale.view', compact('sale','destinations','invoice_no','invoice_date'));
     }
 
     public function SubSale($id)
@@ -186,11 +196,17 @@ class SaleController extends Controller
         // Reduce main sale quantity
         $sale->quantity -= $request->quantity;
         $sale->save();
+        
+        // ✅ Generate invoice number and date here
+        $invoiceNo = 'INV-' . now()->format('YmdHis') . '-' . Str::upper(Str::random(4));
+        $invoiceDate = now()->format('Y-m-d');
+        
 
         // Store sub-sale
         SubSale::create([
             'sale_id'    => $sale->id,
             'quantity'   => $request->quantity,
+            'unit'       => $request->unit,
             'sale_price' => $request->sale_price,
             'mode_terms_of_payment' => $request->mode_terms_of_payment,
             'dispatch_doc_no' => $request->dispatch_doc_no,
@@ -205,11 +221,28 @@ class SaleController extends Controller
             'dated' => $request->dated,
             'destination' => $request->destination,
             'bill_lr_no' => $request->bill_lr_no,
+            'invoice_no' => $invoiceNo,
+            'invoice_date' => $invoiceDate,
         ]);
         
         return redirect()->route('admin.sale.view', $sale->id)
                  ->with('success', 'Sale contract saved successfully!');
    }
+    public function invoice($saleId, $subSaleId = null)
+    {
+        $sale = Sale::with('subSales', 'broker', 'partyname')->findOrFail($saleId);
+
+        $subSale = null;
+        if ($subSaleId) {
+            $subSale = $sale->subSales()->findOrFail($subSaleId);
+        }
+        // return($sale);
+
+        return view('admin.sale.invoice', compact('sale', 'subSale'));
+    }
+
+
+
 
 
 }

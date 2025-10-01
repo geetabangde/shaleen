@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bill of Supply - Exact Copy with Extended Border</title>
+    <style>
+        /* Base styles */
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 9.5pt;
+            margin: 20px;
+        }
+        .bill-container {
+            width: 780px;
+            margin: 0 auto;
+            border: 1px solid black;
+            padding: 5px;
+        }
+        /* Table structure */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 9.5pt;
+        }
+        .main-table, .header-table, .footer-table {
+            border-collapse: collapse;
+        }
+        /* Border styles for cells */
+        .header-table td, .main-table th, .main-table td, .footer-table td {
+            border: 1px solid black;
+            padding: 3px 5px;
+            vertical-align: top;
+            height: 15px;
+        }
+
+        /* Specific border overrides for layout */
+        .no-top-border { border-top: none !important; }
+        .no-bottom-border { border-bottom: none !important; }
+        .no-left-border { border-left: none !important; }
+        .no-right-border { border-right: none !important; }
+        .no-border td { border: none !important; padding: 1px 5px; }
+        .details-box div { line-height: 1.2; }
+        
+        /* Text alignment and formatting */
+        .center-text { text-align: center; }
+        .right-text { text-align: right; }
+        .bold { font-weight: bold; }
+        .small-text { font-size: 8pt; }
+        .tiny-text { font-size: 7.5pt; }
+
+        .bill-title {
+            text-align: center;
+            font-size: 11pt;
+            font-weight: bold;
+            padding: 3px 0;
+            margin-bottom: 5px;
+            border-bottom: 1px solid black;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="bill-container">
+
+    <div class="bill-title">Bill of Supply</div>
+
+    <table class="header-table" style="margin-top: -5px;">
+        <tr>
+            <td style="width: 50%; border-right: none; padding: 0;">
+                <table class="no-border" style="padding: 5px; border-bottom: 1px solid black;">
+                    <tr>
+                        <td colspan="2" class="bold details-box" style="padding-top: 5px; padding-bottom: 5px;">
+                            <div class="bold">SHALEEN OVERSEAS PRIVATE LIMITED</div>
+                            <div>48,Sajan Nagar , Indore</div>
+                            <div>Factory : 356/1 Udyog Nagar Indore</div>
+                            <div>Mandi Man No. 1494025</div>
+                            <div>FSSAI No. 10020026001797</div>
+                            <div>GSTIN/UIN: 23AADCD1979M1ZD</div>
+                            <div>State Name : Madhya Pradesh, Code : 23</div>
+                            <div>CIN: U52590MP2009PTC022166</div>
+                            <div>E-Mail : shaleenoverseas@gmail.com</div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+
+            <td style="width: 50%; padding: 0; border-left: none;">
+                <table class="header-table" style="margin-top: -1px; margin-bottom: -1px;">
+                    <tr style="height: 10px;">
+                        <td style="width: 40%; border-top: 1px solid black; border-left: 1px solid black;">Invoice No.</td>
+                        <td style="width: 60%; border-top: 1px solid black;">Dated</td>
+                    </tr>
+                    <tr style="height: 10px;">
+                        <td class="bold border-left: 1px solid black;">2008</td>
+                        <td class="bold">22-Sep-25</td>
+                    </tr>
+                    <tr style="height: 10px;">
+                        <td class="border-left: 1px solid black;">Delivery Note</td>
+                        <td>Mode/Terms of Payment</td>
+                    </tr>
+                    <tr style="height: 10px;">
+                        <td class="border-left: 1px solid black;"></td>
+                        <td class="bold">8 Days</td>
+                    </tr>
+                    <tr style="height: 10px;">
+                        <td class="border-left: 1px solid black;">Reference No. & Date.</td>
+                        <td>Other References</td>
+                    </tr>
+                    <tr style="height: 10px;">
+                        <td class="border-left: 1px solid black;"></td>
+                        <td></td>
+                    </tr>
+                    <tr style="height: 10px;">
+                        <td class="border-left: 1px solid black;">Buyer's Order No.</td>
+                        <td>Dated</td>
+                    </tr>
+                    <tr style="height: 10px;">
+                        <td class="border-left: 1px solid black;"></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+
+    <table class="header-table" style="margin-top: -1px;">
+        <tr>
+            <td style="width: 50%; padding: 0; border-right: none; border-bottom: none;">
+                <table class="no-border" style="border-bottom: 1px solid black; padding: 5px; padding-top: 0;">
+                    <tr><td colspan="2" style="padding-top: 5px;">Consignee (Ship to)</td></tr>
+                    <tr><td colspan="2" class="bold details-box">
+                        <div class="bold">Sai Baba Agrilink Pvt Ltd - Indore</div>
+                        <div>udyog nagar marble mandi Indore</div>
+                        <div>Man No. 1490408</div>
+                        <div>M- 9826988038</div>
+                    </td></tr>
+                    <tr><td style="width: 30%;">GSTIN/UIN</td><td class="bold">: 23AAGCP1599J1Z4</td></tr>
+                    <tr><td>State Name</td><td>: Madhya Pradesh, Code : 23</td></tr>
+                </table>
+            </td>
+            <td style="width: 50%; padding: 0; border-left: none;">
+                <table class="header-table" style="margin-top: -1px; margin-bottom: -1px;">
+                    <tr style="height: 10px;">
+                        <td style="width: 40%; border-left: 1px solid black;">Dispatch Doc No.</td>
+                        <td style="width: 60%;">Delivery Note Date</td>
+                    </tr>
+                    <tr style="height: 10px;">
+                        <td class="bold">2008</td>
+                        <td></td>
+                    </tr>
+                    <tr style="height: 10px;">
+                        <td>Dispatched through</td>
+                        <td>Destination</td>
+                    </tr>
+                    <tr style="height: 10px;">
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr style="height: 10px;">
+                        <td>Bill of Lading/LR-RR No.</td>
+                        <td>Motor Vehicle No.</td>
+                    </tr>
+                    <tr style="height: 10px;">
+                        <td></td>
+                        <td class="bold">GJ17V9580</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="border-bottom: 1px solid black; border-right: 1px solid black; height: 10px;">
+                            Terms of Delivery: <span class="bold">BROKER : ANKUR</span>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+
+    <table class="header-table" style="margin-top: -1px;">
+        <tr>
+            <td style="width: 50%; padding: 0; border-right: 1px solid black; border-top: none; border-bottom: 1px solid black;">
+                <table class="no-border" style="padding: 5px; padding-top: 0; height: 100%;">
+                    <tr><td colspan="2">Buyer (Bill to)</td></tr>
+                    <tr><td colspan="2" class="bold details-box">
+                        <div class="bold">Sai Baba Agrilink Pvt Ltd - Indore</div>
+                        <div>1/1 Kalali Mohalla, Chawani, Indore</div>
+                        <div>Man No. 1490408</div>
+                        <div>M- 9826988038</div>
+                    </td></tr>
+                    <tr><td style="width: 30%;">GSTIN/UIN</td><td class="bold">: 23AAGCP1599J1Z4</td></tr>
+                    <tr><td>State Name</td><td>: Madhya Pradesh, Code : 23</td></tr>
+                </table>
+            </td>
+            <td style="width: 50%; border-left: none; border-top: none; border-bottom: 1px solid black; border-right: 1px solid black;">
+                </td>
+        </tr>
+    </table>
+
+    <table class="main-table" style="margin-top: -1px;">
+        <thead>
+            <tr>
+                <th style="width: 4%;">Sl No.</th>
+                <th style="width: 30%;">Description of Goods</th>
+                <th style="width: 10%;">HSN/SAC</th>
+                <th style="width: 12%;">Quantity</th>
+                <th style="width: 12%;">Rate</th>
+                <th style="width: 5%;">per</th>
+                <th style="width: 17%;">Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr style="height: 100px;">
+                <td class="center-text no-bottom-border">1</td>
+                <td class="no-bottom-border"><div class="bold">Chick Peas</div></td>
+                <td class="center-text no-bottom-border">07132010</td>
+                <td class="right-text no-bottom-border">240.70 QTL</td>
+                <td class="right-text no-bottom-border">10,400.00</td>
+                <td class="center-text no-bottom-border">QTL</td>
+                <td class="right-text bold no-bottom-border">25,03,280.00</td>
+            </tr>
+            <tr style="height: 1px;">
+                <td class="no-top-border"></td>
+                <td class="no-top-border"></td>
+                <td class="no-top-border"></td>
+                <td class="no-top-border"></td>
+                <td class="no-top-border"></td>
+                <td class="no-top-border"></td>
+                <td class="no-top-border"></td>
+            </tr>
+            <tr>
+                <td colspan="3" class="right-text bold no-right-border">Total</td>
+                <td class="right-text bold no-left-border">240.70 QTL</td>
+                <td colspan="2" class="no-left-border no-right-border"></td>
+                <td class="right-text bold no-left-border">₹ 25,03,280.00</td>
+            </tr>
+            <tr>
+                <td colspan="5" class="small-text no-right-border no-bottom-border">Amount Chargeable (in words)</td>
+                <td colspan="2" class="right-text small-text no-left-border no-bottom-border">E. & O.E.</td>
+            </tr>
+            <tr>
+                <td colspan="7" class="bold no-top-border">Indian Rupees Twenty Five Lakh Three Thousand Two Hundred Eighty Only</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="main-table" style="margin-top: -1px;">
+        <thead>
+            <tr>
+                <th style="width: 50%;">HSN/SAC</th>
+                <th style="width: 25%;">Taxable Value</th>
+                <th style="width: 25%;">Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="center-text">07132010</td>
+                <td class="right-text">25,03,280.00</td>
+                <td class="right-text">25,03,280.00</td>
+            </tr>
+            <tr>
+                <td colspan="2" class="right-text bold no-right-border">Total</td>
+                <td class="right-text bold no-left-border">₹ 25,03,280.00</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="footer-table" style="margin-top: -1px;">
+        <tr>
+            <td style="width: 50%;">
+                Tax Amount (in words) : <span class="bold">NIL</span>
+            </td>
+            <td style="width: 50%; padding: 0; border: none;">
+                <table class="no-border" style="margin-bottom: 5px;">
+                    <tr>
+                        <td style="width: 40%;" class="tiny-text">Company's Bank Details</td>
+                        <td style="width: 60%;"></td>
+                    </tr>
+                    <tr>
+                        <td class="tiny-text">Bank Name</td>
+                        <td class="bold tiny-text">AXIS BANK (922020044646027)</td>
+                    </tr>
+                    <tr>
+                        <td class="tiny-text">A/c No.</td>
+                        <td class="tiny-text">CA 922020044646027</td>
+                    </tr>
+                    <tr>
+                        <td class="tiny-text">Branch & IFSC Code</td>
+                        <td class="bold tiny-text">Yashwant Niwas Road, Indore & UTIB0000443</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td style="border-top: none; border-bottom: none;">
+                Company's PAN : <span class="bold">AADCD1979M</span>
+            </td>
+            <td class="small-text center-text" style="height: 40px; border-top: 1px solid black; border-bottom: none; vertical-align: bottom;">
+                for SHALEEN OVERSEAS PRIVATE LIMITED
+            </td>
+        </tr>
+        <tr>
+            <td class="small-text" style="border-top: none;">
+                <div class="bold">Declaration</div>
+                <div class="tiny-text" style="line-height: 1.1;">
+                We declare that this invoice shows the actual price <br>
+                of the goods described and that all particulars are <br>
+                true and correct.
+                </div>
+            </td>
+            <td class="small-text right-text" style="vertical-align: bottom; border-top: none;">
+                Authorised Signatory
+            </td>
+        </tr>
+    </table>
+
+    <div class="final-footer center-text" style="padding-top: 2px;">
+        <div class="bold small-text" style="border-top: 1px solid black; padding-top: 3px;">SUBJECT TO INDORE JURISDICTION</div>
+        <div class="tiny-text">This is a Computer Generated Invoice</div>
+    </div>
+
+</div>
+
+</body>
+</html>

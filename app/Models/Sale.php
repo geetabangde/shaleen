@@ -18,7 +18,7 @@ class Sale extends Model
         'sales_order_id',
         'broker_name',
         'party_name',
-        'item',
+        'item_id',
         'quantity',
         'bags',
         'brand',
@@ -51,6 +51,12 @@ class Sale extends Model
     {
         return $this->hasMany(SubSale::class);
     }
+
+    public function itemMaster()
+    {
+        return $this->belongsTo(ItemMaster::class, 'item_id');
+    }
+
 
 
     

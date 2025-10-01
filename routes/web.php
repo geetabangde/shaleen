@@ -61,6 +61,9 @@ Route::prefix('admin')->group(function () {
         Route::post('store', [SaleController::class, 'store'])->name('store');
         Route::post('update/{id}', [SaleController::class, 'update'])->name('update');
         Route::post('sub-sale-store/{id}', [SaleController::class, 'subSaleStore'])->name('subSale.store');
+        // Route::get('invoice/{id}', [SaleController::class, 'Invoice'])->name('invoice');
+         Route::get('invoice/{sale}/{subSale?}', [SaleController::class, 'invoice'])->name('invoice');
+
     });
 
     // Bags

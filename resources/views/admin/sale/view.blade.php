@@ -46,7 +46,22 @@
                                                 value="{{ old('sale_price') }}">
                                             @error('sale_price') <div class="invalid-feedback">{{ $message }}</div> @enderror
                                         </div>
-
+                                        <!-- unit Price -->
+                                        <div class="col-md-3">
+                                            <label for="unit" class="form-label">Sale Unit </label>
+                                            <input type="text"  name="unit" id="unit"
+                                                class="form-control @error('unit') is-invalid @enderror"
+                                                value="{{ old('unit') }}">
+                                            @error('unit') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                        </div>
+                                        <!-- <div class="col-md-3" >
+                                            <label>Invoice No</label> -->
+                                            <input type="text" class="form-control" value="{{ old('invoice_no', $nextInvoiceNo ?? '') }}" readonly style="display:none">
+                                        <!-- </div> -->
+                                        <div class="col-md-3">
+                                            <label>Invoice Date</label>
+                                            <input type="date" class="form-control" value="{{ old('invoice_date', now()->format('Y-m-d')) }}" readonly>
+                                        </div>
                                         <!-- Delivery Note -->
                                         <div class="col-md-3">
                                             <label>Delivery Note</label>
@@ -161,6 +176,9 @@
                                             <th>#</th>
                                             <th>Quantity</th>
                                             <th>Sale Price</th>
+                                            <th>Sale Unit</th>
+                                            <th>Invoice No</th>
+                                            <th>Invoice Date</th>
                                             <th>Mode/Terms of Payment</th>
                                             <th>Dispatch Doc No</th>
                                             <th>Delivery Note Date</th>
@@ -184,6 +202,9 @@
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $sub->quantity }}</td>
                                                 <td>{{ number_format($sub->sale_price, 2) }}</td>
+                                                <td>{{ $sub->unit ?? '-' }}</td>
+                                                <td>{{ $sub->invoice_no }}</td>
+                                                <td>{{ $sub->invoice_date }}</td>
                                                 <td>{{ $sub->mode_terms_of_payment ?? '-' }}</td>
                                                 <td>{{ $sub->dispatch_doc_no ?? '-' }}</td>
                                                 <td>{{ $sub->delivery_note_date ? \Carbon\Carbon::parse($sub->delivery_note_date)->format('d-m-Y') : '-' }}</td>

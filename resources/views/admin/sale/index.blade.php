@@ -69,7 +69,7 @@
                               <td>{{ $sale->sales_order_id }}</td>
                               <td>{{ $sale->broker->name ?? $sale->broker_name ?? '-' }}</td>
                               <td>{{ $sale->partyname->name ?? $sale->party_name ?? '-' }}</td>
-                              <td>{{ $sale->item }}</td>
+                              <td>{{ $sale->itemMaster->item_name ?? $sale->item }}</td> <!-- Display item -->
                               <td>{{ $sale->quantity }}</td>
                               <td>{{ $sale->brand }}</td>
                               <td>{{ $sale->loading_history_pending_balance }}</td>
@@ -77,6 +77,7 @@
                                  <a href="{{ route('admin.sale.edit', $sale->id) }}" class="btn btn-sm btn-light"><i class="fas fa-pen text-primary"></i></a>
                                  <a href="{{ route('admin.sale.view', $sale->id) }}" class="btn btn-sm btn-light" data-bs-toggle="tooltip" title="View"><i class="fas fa-eye text-primary"></i></a>
                                  <a href="{{ route('admin.sale.delete', $sale->id) }}" onclick="return confirm('Are you sure?')" class="btn btn-sm btn-light" data-bs-toggle="tooltip" title="Delete"><i class="fas fa-trash text-danger"></i></a>
+                                 
                               </td>
                            </tr>
                           
@@ -90,7 +91,13 @@
                                                    <th>#</th>
                                                    <th>Sub Order Id</th>
                                                    <th>Quantity</th>
-                                                   <th>Rate</th>
+                                                   <th>Sale Price</th>
+                                                   <th>Invoice No</th>
+                                                   <th>Invoice Date</th>
+                                                   <th>Quantity</th>
+                                                   <th>Sale Price</th>
+                                                   <th>Unit</th>
+                                                   <th>Action</th>
                                              </tr>
                                           </thead>
                                           <tbody>
@@ -100,6 +107,17 @@
                                                       <td>SO-{{ $sale->id }}-{{ $subSale->id }}</td>
                                                       <td>{{ $subSale->quantity }}</td>
                                                       <td>₹{{ number_format($subSale->sale_price, 2) }}</td>
+                                                       <td>{{ $subSale->invoice_no }}</td>
+                                                         <td>{{ $subSale->invoice_date }}</td>
+                                                         <td>{{ $subSale->quantity }}</td>
+                                                         <td>{{ $subSale->sale_price }}</td>
+                                                         <td>{{ $subSale->unit }}</td>
+                                                         <td>
+                                                            
+                                                            <a href="{{ route('admin.sale.invoice', [$sale->id, $subSale->id]) }}" 
+                                                               target="_blank" 
+                                                               class="btn btn-sm btn-info">Invoice</a>
+                                                         </td>
                                                    </tr>
                                              @empty
                                                    <tr>
