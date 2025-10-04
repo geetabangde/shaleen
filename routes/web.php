@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\DynamicModulesController;
 // use App\Http\Controllers\Admin\ModuleController;
 use App\Http\Controllers\Admin\ModuleRecordController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\SaleContractController;
 
 // Home route
 Route::get('/', fn() => view('welcome'));
@@ -50,6 +51,17 @@ Route::prefix('admin')->group(function () {
         Route::post('update/{id}', [PurchaseController::class, 'update'])->name('update');
         Route::post('update-status/{id}', [PurchaseController::class, 'updateStatus'])->name('statusupdate');
     });
+    // saleContracts
+    Route::prefix('sale-international')->name('admin.saleContracts.')->group(function () {
+        Route::get('/', [SaleContractController::class, 'index'])->name('index');
+        Route::get('create', [SaleContractController::class, 'create'])->name('create');
+        Route::get('edit/{id}', [SaleContractController::class, 'edit'])->name('edit');
+        Route::get('view/{id}', [SaleContractController::class, 'show'])->name('view');
+        Route::get('delete/{id}', [SaleContractController::class, 'destroy'])->name('delete');
+        Route::post('store', [SaleContractController::class, 'store'])->name('store');
+        Route::post('update/{id}', [SaleContractController::class, 'update'])->name('update');
+        Route::post('update-status/{id}', [SaleContractController::class, 'updateStatus'])->name('statusupdate');
+    });
 
     // Sale
     Route::prefix('sale')->name('admin.sale.')->group(function () {
@@ -61,8 +73,8 @@ Route::prefix('admin')->group(function () {
         Route::post('store', [SaleController::class, 'store'])->name('store');
         Route::post('update/{id}', [SaleController::class, 'update'])->name('update');
         Route::post('sub-sale-store/{id}', [SaleController::class, 'subSaleStore'])->name('subSale.store');
-        // Route::get('invoice/{id}', [SaleController::class, 'Invoice'])->name('invoice');
-         Route::get('invoice/{sale}/{subSale?}', [SaleController::class, 'invoice'])->name('invoice');
+        Route::put('sub-sale/{id}/mark-delivered', [SaleController::class, 'markDelivered'])->name('subSale.markDelivered');
+        Route::get('invoice/{sale}/{subSale?}', [SaleController::class, 'invoice'])->name('invoice');
 
     });
 

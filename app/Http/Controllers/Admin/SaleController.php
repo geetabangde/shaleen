@@ -181,53 +181,72 @@ class SaleController extends Controller
     }
 
     public function subSaleStore(Request $request, $id)
-   {
-        $request->validate([
-            'quantity'   => 'required|numeric|min:0.01',
-            'sale_price' => 'required|numeric|min:0.01',
-        ]);
+    {
+            $request->validate([
+                'quantity'   => 'required|numeric|min:0.01',
+                'sale_price' => 'required|numeric|min:0.01',
+                'delivery_type' => 'required|in:spot,normal',
+            ]);
 
-        $sale = Sale::findOrFail($id);
+            $sale = Sale::findOrFail($id);
 
-        if ($request->quantity > $sale->quantity) {
-            return back()->withErrors(['quantity' => 'Quantity exceeds available stock']);
+            if ($request->quantity > $sale->quantity) {
+                return back()->withErrors(['quantity' => 'Quantity exceeds available stock']);
+            }
+
+            // Reduce main sale quantity
+            $sale->quantity -= $request->quantity;
+            $sale->save();
+            
+            // ✅ Generate invoice number and date here
+            $invoiceNo = 'INV-' . now()->format('YmdHis') . '-' . Str::upper(Str::random(4));
+            $invoiceDate = now()->format('Y-m-d');
+            
+            // ✅ Status set karna based on delivery_type
+           $status = $request->delivery_type === 'spot' ? 'delivered' : 'pending';
+
+            // Store sub-sale
+            SubSale::create([
+                'sale_id'    => $sale->id,
+                'quantity'   => $request->quantity,
+                'unit'       => $request->unit,
+                'sale_price' => $request->sale_price,
+                'mode_terms_of_payment' => $request->mode_terms_of_payment,
+                'dispatch_doc_no' => $request->dispatch_doc_no,
+                'delivery_note_date' => $request->delivery_note_date,
+                'dispatched_through' => $request->dispatched_through,
+                'motor_vehicle_no' => $request->motor_vehicle_no,
+                'terms_of_delivery' => $request->terms_of_delivery,
+                'delivery_note' => $request->delivery_note,
+                'reference_no' => $request->reference_no,
+                'other_references' => $request->other_references,
+                'buyer_order_no' => $request->buyer_order_no,
+                'dated' => $request->dated,
+                'destination' => $request->destination,
+                'bill_lr_no' => $request->bill_lr_no,
+                'invoice_no' => $invoiceNo,
+                'invoice_date' => $invoiceDate,
+                'delivery_type' => $request->delivery_type,
+                'status' => $status, 
+            ]);
+            
+            return redirect()->route('admin.sale.view', $sale->id)
+                    ->with('success', 'Sale contract saved successfully!');
+    }
+
+    public function markDelivered($id)
+    {
+        $subSale = SubSale::findOrFail($id);
+
+        if ($subSale->status === 'pending') {
+            $subSale->status = 'delivered';
+            $subSale->save();
         }
 
-        // Reduce main sale quantity
-        $sale->quantity -= $request->quantity;
-        $sale->save();
-        
-        // ✅ Generate invoice number and date here
-        $invoiceNo = 'INV-' . now()->format('YmdHis') . '-' . Str::upper(Str::random(4));
-        $invoiceDate = now()->format('Y-m-d');
-        
+        return back()->with('success', 'Sub Sale marked as delivered successfully!');
+    }
 
-        // Store sub-sale
-        SubSale::create([
-            'sale_id'    => $sale->id,
-            'quantity'   => $request->quantity,
-            'unit'       => $request->unit,
-            'sale_price' => $request->sale_price,
-            'mode_terms_of_payment' => $request->mode_terms_of_payment,
-            'dispatch_doc_no' => $request->dispatch_doc_no,
-            'delivery_note_date' => $request->delivery_note_date,
-            'dispatched_through' => $request->dispatched_through,
-            'motor_vehicle_no' => $request->motor_vehicle_no,
-            'terms_of_delivery' => $request->terms_of_delivery,
-            'delivery_note' => $request->delivery_note,
-            'reference_no' => $request->reference_no,
-            'other_references' => $request->other_references,
-            'buyer_order_no' => $request->buyer_order_no,
-            'dated' => $request->dated,
-            'destination' => $request->destination,
-            'bill_lr_no' => $request->bill_lr_no,
-            'invoice_no' => $invoiceNo,
-            'invoice_date' => $invoiceDate,
-        ]);
-        
-        return redirect()->route('admin.sale.view', $sale->id)
-                 ->with('success', 'Sale contract saved successfully!');
-   }
+
     public function invoice($saleId, $subSaleId = null)
     {
         $sale = Sale::with('subSales', 'broker', 'partyname')->findOrFail($saleId);

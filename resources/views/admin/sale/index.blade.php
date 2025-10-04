@@ -54,25 +54,22 @@
                               <th>Party Name</th>
                               <th>Item</th>
                               <th>Quantity</th>
-                              <th>Brand</th>
-                              <th>Pending Balance</th>
                               <th>Actions</th>
                            </tr>
                         </thead>
                         <tbody>
                         @forelse($sales as $sale)
                            <tr>
-                                 <td> <button class="expand-btn text-center" data-bs-toggle="collapse" data-bs-target="#nestedTable{{ $sale->id }}" aria-expanded="false" aria-controls="nestedTable{{ $sale->id }}" onclick="toggleArrow(this)">
-                                    <i class="fas fa-chevron-right expand-icon" id="arrow{{ $sale->id }}"></i>
-                                 </button>{{ $loop->iteration }}</td>
+                              <td> <button class="expand-btn text-center" data-bs-toggle="collapse" data-bs-target="#nestedTable{{ $sale->id }}" aria-expanded="false" aria-controls="nestedTable{{ $sale->id }}" onclick="toggleArrow(this)">
+                                 <i class="fas fa-chevron-right expand-icon" id="arrow{{ $sale->id }}"></i>
+                                 </button>{{ $loop->iteration }}
+                              </td>
                               <td>{{ $sale->date->format('Y-m-d') }}</td>
                               <td>{{ $sale->sales_order_id }}</td>
                               <td>{{ $sale->broker->name ?? $sale->broker_name ?? '-' }}</td>
                               <td>{{ $sale->partyname->name ?? $sale->party_name ?? '-' }}</td>
-                              <td>{{ $sale->itemMaster->item_name ?? $sale->item }}</td> <!-- Display item -->
+                              <td>{{ $sale->itemMaster->item_name ?? $sale->item }}</td> 
                               <td>{{ $sale->quantity }}</td>
-                              <td>{{ $sale->brand }}</td>
-                              <td>{{ $sale->loading_history_pending_balance }}</td>
                               <td>
                                  <a href="{{ route('admin.sale.edit', $sale->id) }}" class="btn btn-sm btn-light"><i class="fas fa-pen text-primary"></i></a>
                                  <a href="{{ route('admin.sale.view', $sale->id) }}" class="btn btn-sm btn-light" data-bs-toggle="tooltip" title="View"><i class="fas fa-eye text-primary"></i></a>
@@ -85,11 +82,13 @@
                               <td colspan="11">
                                  <div class="p-3 nested-table-container">
                                        <h6 class="mb-3">Order Details for {{ $sale->sales_order_id }}</h6>
-                                       <table class="table table-bordered table-striped mb-0">
+                                       <table class="table table-bordered table-striped table-light mb-0">
                                           <thead class="table-light">
                                              <tr>
                                                    <th>#</th>
                                                    <th>Sub Order Id</th>
+                                                   <th>Status</th>
+                                                   <th>Action</th>
                                                    <th>Quantity</th>
                                                    <th>Sale Price</th>
                                                    <th>Invoice No</th>
@@ -97,7 +96,7 @@
                                                    <th>Quantity</th>
                                                    <th>Sale Price</th>
                                                    <th>Unit</th>
-                                                   <th>Action</th>
+                                                   <th>Invoice</th>
                                              </tr>
                                           </thead>
                                           <tbody>
@@ -105,19 +104,37 @@
                                                    <tr>
                                                       <td>{{ $loop->iteration }}</td>
                                                       <td>SO-{{ $sale->id }}-{{ $subSale->id }}</td>
+                                                      <!-- Status -->
+                                                      <td>
+                                                         @if($subSale->status === 'delivered')
+                                                               <span class="badge bg-success">Mark as Delivered</span>
+                                                         @else
+                                                               <span class="badge bg-warning">Pending</span>
+                                                         @endif
+                                                      </td>
+                                                      <!-- Action -->
+                                                      <td>
+                                                         @if($subSale->status === 'pending' && $subSale->delivery_type === 'normal')
+                                                               <form action="{{ route('admin.sale.subSale.markDelivered', $subSale->id) }}" method="post" style="display:inline;">
+                                                                  @csrf
+                                                                  @method('PUT')
+                                                                  <button type="submit" class="btn btn-sm btn-success">Pending</button>
+                                                               </form>
+                                                         @else
+                                                               {{ ucfirst($subSale->status) }}
+                                                         @endif
+                                                      </td>
                                                       <td>{{ $subSale->quantity }}</td>
                                                       <td>₹{{ number_format($subSale->sale_price, 2) }}</td>
-                                                       <td>{{ $subSale->invoice_no }}</td>
-                                                         <td>{{ $subSale->invoice_date }}</td>
-                                                         <td>{{ $subSale->quantity }}</td>
-                                                         <td>{{ $subSale->sale_price }}</td>
-                                                         <td>{{ $subSale->unit }}</td>
-                                                         <td>
-                                                            
+                                                      <td>{{ $subSale->invoice_no }}</td>
+                                                      <td>{{ $subSale->invoice_date }}</td>
+                                                      <td>{{ $subSale->quantity }}</td>
+                                                      <td>{{ $subSale->sale_price }}</td>
+                                                      <td>{{ $subSale->unit }}</td>
+                                                      <td>
                                                             <a href="{{ route('admin.sale.invoice', [$sale->id, $subSale->id]) }}" 
-                                                               target="_blank" 
-                                                               class="btn btn-sm btn-info">Invoice</a>
-                                                         </td>
+                                                               target="_blank" class="btn btn-sm btn-info">Invoice</a>
+                                                      </td>
                                                    </tr>
                                              @empty
                                                    <tr>
@@ -159,9 +176,6 @@ function toggleArrow(element) {
         arrow.classList.add('fa-chevron-down');
     }
 }
-
-
-
 // Bootstrap collapse events
 document.addEventListener('DOMContentLoaded', function() {
     const collapseElements = document.querySelectorAll('[data-bs-toggle="collapse"]');

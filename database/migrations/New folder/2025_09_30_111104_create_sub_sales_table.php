@@ -22,6 +22,9 @@ class CreateSubSalesTable extends Migration
             $table->string('unit')->nullable()->after('unit');
             $table->string('invoice_no')->nullable()->after('id');
             $table->date('invoice_date')->nullable()->after('invoice_no');
+            $table->enum('status', ['pending', 'delivered'])->default('pending');
+            $table->enum('delivery_type', ['spot', 'normal'])->default('normal');
+
             $table->timestamps();
         });
     }

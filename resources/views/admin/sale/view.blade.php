@@ -151,11 +151,14 @@
                                             <input type="text" name="terms_of_delivery" class="form-control" value="{{ old('terms_of_delivery') }}">
                                         </div>
 
-                                        <!-- Broker -->
-                                        <!-- <div class="col-md-3">
-                                            <label>Broker</label>
-                                            <input type="text" name="broker" class="form-control" value="{{ old('broker') }}">
-                                        </div> -->
+                                        <div class="col-md-3">
+                                            <label>Delivery Type <span class="text-danger">*</span></label>
+                                            <select name="delivery_type" class="form-control" required>
+                                                <option value="spot">Spot Delivery</option>
+                                                <option value="normal">Normal Delivery</option>
+                                            </select>
+                                        </div>
+
                                     </div>
                                     <div class="row mt-4">
                                         <div class="col-12 text-end">
@@ -174,6 +177,8 @@
                                     <thead>
                                         <tr>
                                             <th>#</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
                                             <th>Quantity</th>
                                             <th>Sale Price</th>
                                             <th>Sale Unit</th>
@@ -193,6 +198,7 @@
                                             <th>Reference No. & Date</th>
                                             <th>Delivery Note</th>
                                             <th>Delivery Note Date</th>
+                                            
                                             <th>Date</th>
                                         </tr>
                                     </thead>
@@ -200,6 +206,28 @@
                                         @forelse($sale->subSales as $sub)
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
+                                                <!-- Status -->
+                                                <td>
+                                                    @if($sub->status === 'delivered')
+                                                        <span class="badge bg-success">Mark as Delivered</span>
+                                                    @else
+                                                        <span class="badge bg-warning">Pending</span>
+                                                    @endif
+                                                </td>
+
+                                                <!-- Action -->
+                                                <td>
+                                                    @if($sub->status === 'pending' && $sub->delivery_type === 'normal')
+                                                        <form action="{{ route('admin.sale.subSale.markDelivered', $sub->id) }}" method="post" style="display:inline;">
+                                                            @csrf
+                                                            @method('PUT')
+                                                            <button type="submit" class="btn btn-sm btn-success">Pending</button>
+                                                        </form>
+                                                    @else
+                                                        {{ ucfirst($sub->status) }}
+                                                    @endif
+                                                </td>
+
                                                 <td>{{ $sub->quantity }}</td>
                                                 <td>{{ number_format($sub->sale_price, 2) }}</td>
                                                 <td>{{ $sub->unit ?? '-' }}</td>
@@ -220,6 +248,7 @@
                                                 <td>{{ $sub->delivery_note ?? '-' }}</td>
                                                 <td>{{ $sub->delivery_note_date ?? '-' }}</td>
                                                 <td>{{ $sub->created_at->format('d-m-Y h:i A') }}</td>
+
                                             </tr>
                                         @empty
                                             <tr>

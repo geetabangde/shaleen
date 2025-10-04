@@ -61,6 +61,13 @@
                         <span data-key="t-purchases">Sales</span>
                     </a>
                 </li>
+                <!-- sale contracts -->
+                <li>
+                    <a href="{{ route('admin.saleContracts.index') }}">
+                        <i class="fas fa-layer-group"></i>
+                        <span data-key="t-purchases">Sales Contracts</span>
+                    </a>
+                </li>
                  <li>
                     <a href="{{ route('admin.users.index') }}">
                         <i class="fas fa-users"></i>

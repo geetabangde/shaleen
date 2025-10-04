@@ -26,6 +26,8 @@ class SubSale extends Model
     'bill_lr_no',
     'invoice_no', 
     'invoice_date',
+    'status',
+    'delivery_type',
     ];
 
     public function sale()

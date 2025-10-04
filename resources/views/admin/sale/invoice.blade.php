@@ -5,6 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bill of Supply - Final Exact Layout with 3 Left Boxes</title>
     <style>
+        
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            .bill-container, .bill-container * {
+                visibility: visible;
+            }
+            .bill-container {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+            }
+            .no-print {
+                display: none !important;
+            }
+        }
+
         /* Base styles */
         body {
             font-family: Arial, sans-serif;
@@ -16,6 +35,28 @@
             margin: 0 auto;
             border: 1px solid black;
             padding: 5px;
+        }
+
+         /* Print Button Styles */
+        .print-button-container {
+            text-align: right;
+            margin-bottom: 10px;
+            width: 780px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .btn {
+            padding: 10px 20px;
+            font-size: 14px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            transition: background-color 0.3s;
+        }
+        .btn:hover {
+            background-color: #0056b3;
         }
         /* Table structure */
         table {
@@ -85,6 +126,9 @@
     </style>
 </head>
 <body>
+    <div class="print-button-container no-print">
+    <button onclick="window.print()" class="btn">Print Invoice</button>
+</div>
 
 <div class="bill-container">
 
@@ -344,8 +388,12 @@
         <div class="bold small-text" style="border-top: 1px solid black; padding-top: 3px;">SUBJECT TO INDORE JURISDICTION</div>
         <div class="tiny-text">This is a Computer Generated Invoice</div>
     </div>
+    <div style="text-align: right; margin-bottom: 10px;">
+    
+</div>
 
 </div>
+
 
 </body>
 </html>

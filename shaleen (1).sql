@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 01, 2025 at 02:52 PM
+-- Generation Time: Oct 04, 2025 at 03:32 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -438,9 +438,43 @@ CREATE TABLE `sales` (
 INSERT INTO `sales` (`id`, `date`, `sales_order_id`, `item_id`, `broker_name`, `party_name`, `item`, `quantity`, `bags`, `brand`, `price`, `remark`, `loading_history_pending_balance`, `created_at`, `updated_at`) VALUES
 (2, '2025-09-24', '8979', '3', '25', '27', 'jgjg', 23230.00, 2, 'Brand Name', 212.00, 'Remark', 'Loading History', '2025-09-25 07:30:34', '2025-09-30 08:12:55'),
 (3, '2025-09-30', '3443', '4', '27', '22', 'yollow dal', 150.00, 4, 'no', 2000.00, 'no', '200', '2025-09-26 04:10:04', '2025-09-30 08:11:45'),
-(4, '2025-09-18', 'SO-20250926095457-WCZ3', '3', '26', '25', 'yollow dal', 32106.00, 5, 'no', 535.00, 'Remark', '100', '2025-09-26 04:24:57', '2025-10-01 05:10:23'),
+(4, '2025-09-18', 'SO-20250926095457-WCZ3', '3', '26', '25', 'yollow dal', 32075.00, 5, 'no', 535.00, 'Remark', '100', '2025-09-26 04:24:57', '2025-10-03 02:00:22'),
 (5, '2025-10-03', 'SO-20251001115844-KS9Y', '2', '26', '22', NULL, 400.00, 2, 'test', 500.00, 'Remark', 'yes', '2025-10-01 06:28:44', '2025-10-01 06:28:44'),
-(6, '2025-10-03', 'SO-20251001120605-ZZWX', '2', '26', '25', NULL, 50.00, 3, 'brand', 78979.00, 'hkhkj', 'sdfsdf', '2025-10-01 06:36:05', '2025-10-01 06:41:32');
+(6, '2025-10-03', 'SO-20251001120605-ZZWX', '2', '26', '25', NULL, 49.00, 3, 'brand', 78979.00, 'hkhkj', 'sdfsdf', '2025-10-01 06:36:05', '2025-10-03 02:10:48');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sale_contracts`
+--
+
+CREATE TABLE `sale_contracts` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `contract_date` varchar(255) DEFAULT NULL,
+  `contract_no` varchar(255) DEFAULT NULL,
+  `seller_name` varchar(255) DEFAULT NULL,
+  `buyer_name` varchar(255) DEFAULT NULL,
+  `commodity` varchar(255) DEFAULT NULL,
+  `packing` varchar(255) DEFAULT NULL,
+  `shipment_date` date DEFAULT NULL,
+  `price` decimal(12,2) DEFAULT NULL,
+  `quantity` decimal(12,3) DEFAULT NULL,
+  `total_value` decimal(12,2) DEFAULT NULL,
+  `payment_terms` varchar(255) DEFAULT NULL,
+  `documents` text DEFAULT NULL,
+  `document_names` text DEFAULT NULL,
+  `seller_bank_details` text DEFAULT NULL,
+  `terms_conditions` longtext DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `sale_contracts`
+--
+
+INSERT INTO `sale_contracts` (`id`, `contract_date`, `contract_no`, `seller_name`, `buyer_name`, `commodity`, `packing`, `shipment_date`, `price`, `quantity`, `total_value`, `payment_terms`, `documents`, `document_names`, `seller_bank_details`, `terms_conditions`, `created_at`, `updated_at`) VALUES
+(7, '2025-10-09', '001', '25', '22', 'Reprehenderit error', 'Packing', '2025-10-11', 500.00, 10.000, 5000.00, 'Payment Term', '[{\"name\":\"1 Original Invoices\",\"file\":\"http:\\/\\/127.0.0.1:8000\\/uploads\\/documents\\/document_1759583275_0.pdf\"},{\"name\":\"3\\/3 Bill of lading:\",\"file\":\"http:\\/\\/127.0.0.1:8000\\/uploads\\/documents\\/document_1759583275_1.pdf\"},{\"name\":\"1 Origine Certificate\",\"file\":\"http:\\/\\/127.0.0.1:8000\\/uploads\\/documents\\/document_1759583275_2.pdf\"},{\"name\":\"1 Phytosanitary Certificate\",\"file\":\"http:\\/\\/127.0.0.1:8000\\/uploads\\/documents\\/document_1759583275_3.pdf\"},{\"name\":\"Conformity Certificate\",\"file\":\"http:\\/\\/127.0.0.1:8000\\/uploads\\/documents\\/document_1759583794_0.pdf\"},{\"name\":\"Weight & Quality Certificate\",\"file\":\"http:\\/\\/127.0.0.1:8000\\/uploads\\/documents\\/document_1759583794_1.pdf\"},{\"name\":\"1 Fumigation Certificate\",\"file\":\"http:\\/\\/127.0.0.1:8000\\/uploads\\/documents\\/document_1759583794_2.pdf\"},{\"name\":\"1 Packing List\",\"file\":\"http:\\/\\/127.0.0.1:8000\\/uploads\\/documents\\/document_1759583794_3.pdf\"},{\"name\":\"1 Original Invoices\",\"file\":\"http:\\/\\/127.0.0.1:8000\\/uploads\\/documents\\/document_1759584532_0.pdf\"},{\"name\":\"3\\/3 Bill of lading:\",\"file\":\"http:\\/\\/127.0.0.1:8000\\/uploads\\/documents\\/document_1759584532_1.pdf\"}]', NULL, 'Seller Bank Details', '<p>Terms &amp; Conditions</p>', '2025-10-04 07:37:55', '2025-10-04 08:00:26');
 
 -- --------------------------------------------------------
 
@@ -462,9 +496,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('3MedhjfSS3YKovNwnz2d2s5O1lfjG5iFJsWox37y', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiUEZZbDMxOXpWVDIwcTFlWkI2MVlGd2FRa1hIenJPd3VaUGZUVmtzcSI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDU6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9hZG1pbi9zYWxlL2ludm9pY2UvNC8xMCI7fXM6NTI6ImxvZ2luX2FkbWluXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6Mjc7fQ==', 1759322824),
-('dpeR6amGPa4ShlHwPyjW6IJ1poi8tBqzFqRkL9OO', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiNHV4UlZ5NkNoSFJxa2RUaTF2SmZEWm1yRnIzR2hJeWlJaUdxeE5XVyI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mzk6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hZG1pbi9zYWxlL3ZpZXcvNCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTI6ImxvZ2luX2FkbWluXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6Mjc7fQ==', 1759241101),
-('yFxZKX0SivFxhCTCAFwHTzooVS14I44EzWvsJArp', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiQlZpRENxMzJkWE1EaGtSNFY0SDMwT256dEFlVUo5dHM5bTZHZFZ2ZyI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1759304560);
+('TOLt9OxaYdn0qgaBfwthzRJruvIOFBsT5G1H7q4L', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiQWYwZXNJRjB3N2hIalo3ekU4bUJWcVduVWxCTW9WZmhSOW9sZEJPVCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDY6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hZG1pbi9zYWxlLWludGVybmF0aW9uYWwiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjUyOiJsb2dpbl9hZG1pbl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjI3O30=', 1759584730);
 
 -- --------------------------------------------------------
 
@@ -494,16 +526,22 @@ CREATE TABLE `sub_sales` (
   `destination` varchar(255) DEFAULT NULL,
   `bill_lr_no` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `status` enum('pending','delivered') NOT NULL DEFAULT 'pending',
+  `delivery_type` enum('spot','normal') NOT NULL DEFAULT 'normal'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `sub_sales`
 --
 
-INSERT INTO `sub_sales` (`id`, `sale_id`, `invoice_no`, `invoice_date`, `quantity`, `sale_price`, `unit`, `mode_terms_of_payment`, `dispatch_doc_no`, `delivery_note_date`, `dispatched_through`, `motor_vehicle_no`, `terms_of_delivery`, `delivery_note`, `reference_no`, `other_references`, `buyer_order_no`, `dated`, `destination`, `bill_lr_no`, `created_at`, `updated_at`) VALUES
-(10, 4, 'INV-20251001103820-WZOH', '2025-10-01', 4, 34.00, 'QTL', '8 days', '2009', '2025-10-15', 'Dispatched Through', 'GJ17Y95801', 'Terms of Delivery', 'Delivery Note yes', '001ref', 'Other References', '002ord', '2025-10-09', '59 Hague Drive', '001LLRNO', '2025-10-01 05:08:20', '2025-10-01 05:08:20'),
-(11, 4, 'INV-20251001104023-1GAK', '2025-10-01', 4, 4.00, 'QTL', '8 days', '2010', '2025-10-15', 'Dispatched Through', 'GJ17Y95801', 'Terms of Delivery', 'Delivery Note NOte', '001ref', 'Other References', '002ord', '2025-10-16', '59 Hague Drive', '001LLRNO', '2025-10-01 05:10:23', '2025-10-01 05:10:23');
+INSERT INTO `sub_sales` (`id`, `sale_id`, `invoice_no`, `invoice_date`, `quantity`, `sale_price`, `unit`, `mode_terms_of_payment`, `dispatch_doc_no`, `delivery_note_date`, `dispatched_through`, `motor_vehicle_no`, `terms_of_delivery`, `delivery_note`, `reference_no`, `other_references`, `buyer_order_no`, `dated`, `destination`, `bill_lr_no`, `created_at`, `updated_at`, `status`, `delivery_type`) VALUES
+(16, 4, 'INV-20251003072211-NU5R', '2025-10-03', 1, 232.00, 'QTL', '8 days', 'Dispatch Doc No', '2025-10-29', 'Dispatched Through', 'GJ17Y9580', 'Terms of Delivery', 'Delivery Note', '001ref', 'Other References', '002ord', '2025-10-17', '59 Hague Drive', '001LLRNO', '2025-10-03 01:52:11', '2025-10-03 01:52:11', 'delivered', 'spot'),
+(17, 4, 'INV-20251003072254-MJKL', '2025-10-03', 4, 2312.00, 'QTL', '8 days', '2008', '2025-10-29', 'Dispatched Through', 'GJ17Y9580', 'Terms of Delivery', 'Delivery Note', '001ref', NULL, '002ord', '2025-10-22', '59 Hague Drive', '002LLRNO', '2025-10-03 01:52:54', '2025-10-03 01:53:06', 'delivered', 'normal'),
+(18, 4, 'INV-20251003072548-GO8J', '2025-10-03', 1, 232.00, 'QTL', '8 days', '2008', '2025-10-21', 'Dispatched Through', 'GJ17Y9580', 'Terms of Delivery', 'Delivery Note', '001ref', 'Other References', '002ord', '2025-10-10', '59 Hague Drive', '001LLRNO', '2025-10-03 01:55:48', '2025-10-03 01:55:48', 'delivered', 'spot'),
+(19, 4, 'INV-20251003072629-PQ11', '2025-10-03', 4, 7899.00, 'QTL', '8 days', '2008', '2025-10-21', 'Dispatched Through', 'GJ17Y9580', 'Terms of Delivery', 'Delivery Note', '001ref', 'Other References', '002ord', '2025-10-16', '59 Hague Drive', '001LLRNO', '2025-10-03 01:56:29', '2025-10-03 01:59:39', 'delivered', 'normal'),
+(20, 4, 'INV-20251003073022-IWZS', '2025-10-03', 4, 33.00, 'QTL', '8 days', '2008', '2025-10-22', 'Dispatched Through', NULL, 'Terms of Delivery', 'Delivery Note', '001ref', 'Other References', '002ord', '2025-10-10', '59 Hague Drive', '001LLRNO', '2025-10-03 02:00:22', '2025-10-03 02:07:55', 'delivered', 'normal'),
+(21, 6, 'INV-20251003074048-WFDZ', '2025-10-03', 1, 554.00, 'QTL', '8 days', '20065', '2025-10-22', 'Dispatched Through', 'GJ17Y9580', 'Terms of Delivery', 'Delivery Note', '001ref', 'Other References', '000ord', '2025-10-17', '59 Hague Drive', '001LLRNO', '2025-10-03 02:10:48', '2025-10-03 02:10:48', 'pending', 'normal');
 
 -- --------------------------------------------------------
 
@@ -652,6 +690,12 @@ ALTER TABLE `sales`
   ADD UNIQUE KEY `sales_sales_order_id_unique` (`sales_order_id`);
 
 --
+-- Indexes for table `sale_contracts`
+--
+ALTER TABLE `sale_contracts`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `sessions`
 --
 ALTER TABLE `sessions`
@@ -762,10 +806,16 @@ ALTER TABLE `sales`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
+-- AUTO_INCREMENT for table `sale_contracts`
+--
+ALTER TABLE `sale_contracts`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
 -- AUTO_INCREMENT for table `sub_sales`
 --
 ALTER TABLE `sub_sales`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `users`
