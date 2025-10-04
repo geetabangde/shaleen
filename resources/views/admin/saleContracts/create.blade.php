@@ -116,42 +116,61 @@
                            <div class="text-danger">{{ $message }}</div>
                            @enderror
                         </div>
-
                         <!-- documents table -->
-                        <div class="col-md-12">
-                           <label class="form-label">Documents <span class="text-danger">*</span></label>
-                           <table class="table table-bordered" id="documents_table">
-                              <thead>
-                                 <tr>
-                                    <th>Document Name</th>
-                                    <th>Upload Document</th>
-                                    <th>Action</th>
-                                 </tr>
-                              </thead>
-                              <tbody>
-                                 <tr>
-                                    <td>
-                                       <input type="text" name="document_names[]" class="form-control" placeholder="Document Name" required>
-                                    </td>
-                                    <td>
-                                       <input type="file" name="documents[]" class="form-control" required>
-                                    </td>
-                                    <td>
-                                       <button type="button" class="btn btn-success addRow">➕ Add More</button>
-                                    </td>
-                                 </tr>
-                              </tbody>
-                           </table>
-                           @error('documents')
-                           <div class="text-danger">{{ $message }}</div>
-                           @enderror
-                           @error('documents.*')
-                           <div class="text-danger">{{ $message }}</div>
-                           @enderror
-                           @error('document_names.*')
-                           <div class="text-danger">{{ $message }}</div>
-                           @enderror
-                        </div>
+<div class="col-md-12">
+    <label class="form-label">Documents <span class="text-danger">*</span></label>
+    <table class="table table-bordered" id="documents_table">
+        <thead>
+            <tr>
+                <th>Document Name</th>
+                <th>Upload Document</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @php
+                $defaultDocs = [
+                    '1 Original Invoices',
+                    '3/3 Bill of lading:',
+                    '1 Origine Certificate.',
+                    '1 Phytosanitary Certificate',
+                    '1 Packing List',
+                    '1 Fumigation Certificate',
+                    'Weight & Quality Certificate',
+                    'Conformity Certificate'
+                ];
+            @endphp
+
+            @foreach($defaultDocs as $docName)
+            <tr>
+                <td>
+                    <input type="text" name="document_names[]" class="form-control" value="{{ $docName }}" required>
+                </td>
+                <td>
+                    <input type="file" name="documents[]" class="form-control" required>
+                </td>
+                <td>
+                    <!-- Empty column, action button below -->
+                </td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+
+    <!-- Add More button below the table -->
+    <button type="button" class="btn btn-success" id="add_document_btn">➕ Add More</button>
+
+    @error('documents')
+    <div class="text-danger">{{ $message }}</div>
+    @enderror
+    @error('documents.*')
+    <div class="text-danger">{{ $message }}</div>
+    @enderror
+    @error('document_names.*')
+    <div class="text-danger">{{ $message }}</div>
+    @enderror
+</div>
+
                         <!-- terms and conditions -->
                         <div class="col-md-12">
                            <label for="terms_conditions" class="form-label">Terms & Conditions</label>
@@ -181,31 +200,32 @@
         });
 </script>
 <script>
-   document.addEventListener('DOMContentLoaded', function() {
-      const table = document.getElementById('documents_table').getElementsByTagName('tbody')[0];
+document.addEventListener('DOMContentLoaded', function() {
+    const tableBody = document.getElementById('documents_table').getElementsByTagName('tbody')[0];
+    const addBtn = document.getElementById('add_document_btn');
 
-      table.addEventListener('click', function(e) {
-         if(e.target && e.target.classList.contains('addRow')) {
-            const newRow = document.createElement('tr');
-            newRow.innerHTML = `
-               <td>
-                  <input type="text" name="document_names[]" class="form-control" placeholder="Document Name" required>
-               </td>
-               <td>
-                  <input type="file" name="documents[]" class="form-control" required>
-               </td>
-               <td>
-                  <button type="button" class="btn btn-danger removeRow">❌ Remove</button>
-               </td>
-            `;
-            table.appendChild(newRow);
-         }
+    addBtn.addEventListener('click', function() {
+        const newRow = document.createElement('tr');
+        newRow.innerHTML = `
+            <td>
+                <input type="text" name="document_names[]" class="form-control" placeholder="Document Name" required>
+            </td>
+            <td>
+                <input type="file" name="documents[]" class="form-control" required>
+            </td>
+            <td>
+                <button type="button" class="btn btn-danger removeRow">❌ Remove</button>
+            </td>
+        `;
+        tableBody.appendChild(newRow);
+    });
 
-         if(e.target && e.target.classList.contains('removeRow')) {
+    // Remove dynamically added rows
+    tableBody.addEventListener('click', function(e) {
+        if(e.target && e.target.classList.contains('removeRow')) {
             e.target.closest('tr').remove();
-         }
-      });
-   });
+        }
+    });
+});
 </script>
-
 @endsection
