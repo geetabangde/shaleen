@@ -65,15 +65,6 @@
                                           </select>
                                           @error('party_name') <div class="invalid-feedback">{{ $message }}</div> @enderror
                                        </div>
-
-                                    <!-- Item -->
-                                    <!-- <div class="col-md-6">
-                                       <label for="item" class="form-label">Item <span class="text-danger">*</span></label>
-                                       <input type="text" name="item" id="item"
-                                             class="form-control @error('item') is-invalid @enderror"
-                                             value="{{ old('item') }}">
-                                       @error('item') <div class="invalid-feedback">{{ $message }}</div> @enderror
-                                    </div> -->
                                     <div class="col-md-6">
                                        <label class="form-label">Item <span class="text-danger">*</span></label>
                                        <select name="item_id" class="form-control @error('item') is-invalid @enderror" required>
@@ -125,6 +116,14 @@
                                              class="form-control @error('price') is-invalid @enderror"
                                              value="{{ old('price') }}">
                                        @error('price') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                    </div>
+                                    <!-- unit -->
+                                    <div class="col-md-6">
+                                       <label for="unit" class="form-label">Unit</label>
+                                       <input type="text" name="unit" id="unit"
+                                             class="form-control @error('unit') is-invalid @enderror"
+                                             value="{{ old('unit') }}">
+                                       @error('unit') <div class="invalid-feedback">{{ $message }}</div> @enderror
                                     </div>
                                     <!-- Loading History Pending Balance -->
                                     <div class="col-md-6">

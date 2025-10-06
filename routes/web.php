@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\DynamicModulesController;
 use App\Http\Controllers\Admin\ModuleRecordController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\SaleContractController;
+use App\Http\Controllers\Admin\SettingController;
 
 // Home route
 Route::get('/', fn() => view('welcome'));
@@ -99,6 +100,16 @@ Route::prefix('admin')->group(function () {
         Route::post('store', [UserController::class, 'store'])->name('store');
         Route::post('update/{id}', [UserController::class, 'update'])->name('update');
         Route::get('update-status/{id}', [UserController::class, 'toggleStatus'])->name('toggleStatus');
+    });
+    // Settings
+     Route::prefix('settings')->name('admin.settings.')->group(function () {
+        Route::get('/', [SettingController::class, 'index'])->name('index');
+        Route::get('create', [SettingController::class, 'create'])->name('create');
+        Route::get('edit/{id}', [SettingController::class, 'edit'])->name('edit');
+        Route::get('view/{id}', [SettingController::class, 'show'])->name('view');
+        Route::get('delete/{id}', [SettingController::class, 'destroy'])->name('delete');
+        Route::post('store', [SettingController::class, 'store'])->name('store');
+        Route::post('update/{id}', [SettingController::class, 'update'])->name('update');
     });
    
 

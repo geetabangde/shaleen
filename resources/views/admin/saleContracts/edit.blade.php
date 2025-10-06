@@ -141,7 +141,14 @@
                                     <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                     </div>
-
+                                    <div class="col-md-4">
+                                          <label for="status" class="form-label">Status <span class="text-danger">*</span></label>
+                                          <select name="status" class="form-control @error('status') is-invalid @enderror" required>
+                                                <option value="pending" {{ $saleContract->status == 'pending' ? 'selected' : '' }}>Pending</option>
+                                                <option value="approved" {{ $saleContract->status == 'approved' ? 'selected' : '' }}>Approved</option>
+                                                <option value="rejected" {{ $saleContract->status == 'rejected' ? 'selected' : '' }}>Rejected</option>
+                                          </select>
+                                    </div>
                                     <!-- Documents Section -->
                               <div class="col-md-12">
                               <label class="form-label">Documents</label>
@@ -202,7 +209,9 @@
                                     <!-- Terms & Conditions (CKEditor) -->
                                     <div class="col-md-12">
                                     <label for="terms_conditions" class="form-label">Terms & Conditions</label>
-                                    <textarea class="form-control" id="terms_conditions" name="terms_conditions" rows="4">{{ old('terms_conditions', $saleContract->terms_conditions) }}</textarea>
+                                    <textarea class="form-control" id="terms_conditions" name="terms_conditions" rows="6">{{ old('terms_conditions', $termsValue) }}</textarea>
+
+                                    <!-- <textarea class="form-control" id="terms_conditions" name="terms_conditions" rows="4">{{ old('terms_conditions', $saleContract->terms_conditions) }}</textarea> -->
                                     @error('terms_conditions')
                                     <div class="text-danger">{{ $message }}</div>
                                     @enderror

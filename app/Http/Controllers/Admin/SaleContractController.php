@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Purchase;
 use App\Models\SaleContract;
 use App\Models\Admin;
+use App\Models\Setting;
 class SaleContractController extends Controller
 {
     public function index()
@@ -28,8 +29,11 @@ class SaleContractController extends Controller
             $types = is_array($ledger->types) ? $ledger->types : json_decode($ledger->types, true);
             return in_array('seller', $types ?? []);
         });
+        // Fetch Terms & Conditions from settings table
+        $termsValue = \App\Models\Setting::where('key', 'Terms & Conditions')->value('value') ?? '';
+        // dd($termsValue);
 
-        return view('admin.saleContracts.create', compact('buyers', 'sellers'));
+        return view('admin.saleContracts.create', compact('buyers', 'sellers','termsValue'));
     }
     public function store(Request $request)
     {   
@@ -49,6 +53,7 @@ class SaleContractController extends Controller
             'terms_conditions'    => 'nullable|string',
             'documents.*'         => 'nullable|file|mimes:pdf,doc,docx,jpg,png|max:2048',
             'document_names.*'    => 'nullable|string|max:255',
+            'status'               => 'nullable|in:pending,approved,rejected',
         ]);
 
         // total value calculate
@@ -76,6 +81,9 @@ class SaleContractController extends Controller
         // Remove document_names from validated array to avoid Array to string conversion
         unset($validated['document_names']);
 
+        // ✅ Default status
+        // default status if not provided
+        $validated['status'] = $request->status ?? 'pending';
 
         // create record
         SaleContract::create($validated);
@@ -97,8 +105,13 @@ class SaleContractController extends Controller
             return in_array('seller', $types ?? []);
         });
         $saleContract = SaleContract::findOrFail($id);
+         // Fetch Terms & Conditions from settings table
+    $termsValue = \App\Models\Setting::where('key', 'Terms & Conditions')->value('value') ?? '';
 
-        return view('admin.saleContracts.edit', compact('saleContract','sellers','buyers'));
+    // If SaleContract has terms_conditions, use it; otherwise use settings
+    $termsValue = $saleContract->terms_conditions ?? $termsValue;
+
+        return view('admin.saleContracts.edit', compact('saleContract','sellers','buyers','termsValue'));
     }
 
     public function destroy($id)
@@ -140,6 +153,7 @@ class SaleContractController extends Controller
             'terms_conditions'    => 'nullable|string',
             'documents.*'         => 'nullable|file|mimes:pdf,doc,docx,jpg,png|max:2048',
             'document_names.*'    => 'nullable|string|max:255',
+            'status'              => 'required|in:pending,approved,rejected', // ✅ add this
         ]);
 
         // Calculate total value

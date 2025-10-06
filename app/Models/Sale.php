@@ -23,6 +23,7 @@ class Sale extends Model
         'bags',
         'brand',
         'price',
+        'unit',
         'remark',
         'loading_history_pending_balance',
     ];

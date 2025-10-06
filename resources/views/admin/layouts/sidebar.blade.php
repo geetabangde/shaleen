@@ -75,7 +75,6 @@
                     </a>
                 </li>
 
-
                 {{-- Dynamic Modules --}}
                 <li>
                     <a href="{{ route('admin.dynamicmodules.index') }}">
@@ -93,7 +92,14 @@
                         </a>
                     </li>
                 @endforeach
-
+                
+                {{-- Reports --}}
+                <li>
+                    <a href="{{ route('admin.settings.index') }}">
+                        <i class="fas fa-users"></i>
+                        <span data-key="t-purchases">Settings</span>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>

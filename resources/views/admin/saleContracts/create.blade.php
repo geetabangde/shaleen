@@ -96,18 +96,6 @@
                            <div class="text-danger">{{ $message }}</div>
                            @enderror
                         </div>
-                        <!-- documents -->
-                        <!-- <div class="col-md-4">
-                           <label for="documents" class="form-label">Documents <span class="text-danger">*</span></label>
-                           <input type="file" class="form-control" id="documents" name="documents[]" multiple>
-                           @error('documents')
-                           <div class="text-danger">{{ $message }}</div>
-                           @enderror
-                           @error('documents.*')
-                           <div class="text-danger">{{ $message }}</div>
-                           @enderror
-                        </div> -->
-
                         <!-- seller_bank_details -->
                         <div class="col-md-4">
                            <label for="seller_bank_details" class="form-label">Seller Bank Details <span class="text-danger">*</span></label>
@@ -116,6 +104,15 @@
                            <div class="text-danger">{{ $message }}</div>
                            @enderror
                         </div>
+                        <div class="col-md-4">
+                           <label for="status" class="form-label">Status <span class="text-danger">*</span></label>
+                              <select name="status" class="form-control @error('status') is-invalid @enderror" required>
+                              <option value="pending">Pending</option>
+                              <option value="approved">Approved</option>
+                              <option value="rejected">Rejected</option>
+                           </select>
+                        </div>
+
                         <!-- documents table -->
                         <div class="col-md-12">
                            <label class="form-label">Documents <span class="text-danger">*</span></label>
@@ -171,13 +168,20 @@
                            @enderror
                         </div>
                         <!-- Terms and Conditions -->
-                        <div class="col-md-12">
+                        <!-- <div class="col-md-12">
                            <label for="terms_conditions" class="form-label">Terms & Conditions</label>
                            <textarea class="form-control" id="terms_conditions" name="terms_conditions" rows="4">{{ old('terms_conditions') }}</textarea>
                            @error('terms_conditions')
                            <div class="text-danger">{{ $message }}</div>
                            @enderror
+                        </div> -->
+                        <div class="col-md-12">
+                           <label for="terms_conditions" class="form-label">Terms & Conditions</label>
+                           <textarea class="form-control" id="terms_conditions" name="terms_conditions" rows="6">
+                              {{ old('terms_conditions', $termsValue) }}
+                           </textarea>
                         </div>
+
                      </div>
                   </div>
                   <div class="card-footer text-end">

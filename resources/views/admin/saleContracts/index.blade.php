@@ -17,10 +17,12 @@
             <div class="card-body">
           <div class="table-rep-plugin">
              <div class="table-responsive mb-0" >
-                 <table class="table table-bordered table-striped">
+                 <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
                   <thead>
                       <tr>
                           <th>#</th>
+                          <th>Actions</th>
+                           <th>Status</th> 
                           <th>Contract No</th>
                           <th>Contract Date</th>
                           <th>Buyer</th>
@@ -30,13 +32,31 @@
                           <th>Quantity</th>
                           <th>Total Value</th>
                           <th>Documents</th>
-                          <th>Actions</th>
+                          
                       </tr>
                   </thead>
                   <tbody>
                       @foreach($saleContracts as $contract)
                           <tr>
                               <td>{{ $loop->iteration }}</td>
+                               <td>
+                                  <a href="{{ route('admin.saleContracts.edit', $contract->id) }}" class="btn btn-sm btn-light"><i class="fas fa-pen text-primary"></i></a>
+                                  <a href="{{ route('admin.saleContracts.view', $contract->id) }}" class="btn btn-sm btn-light" data-bs-toggle="tooltip" title="View">
+                                    <i class="fas fa-eye text-primary"></i>
+                                 </a>
+                                  <a href="{{ route('admin.saleContracts.delete', $contract->id) }}"  onclick="return confirm('Are you sure?')" class="btn btn-sm btn-light" data-bs-toggle="tooltip" title="Delete">
+                                    <i class="fas fa-trash text-danger"></i>
+                                 </a>
+                              </td>
+                            <td>
+                                @if($contract->status === 'approved')
+                                    <span class="badge bg-success">Approved</span>
+                                @elseif($contract->status === 'rejected')
+                                    <span class="badge bg-danger">Rejected</span>
+                                @else
+                                    <span class="badge bg-warning text-dark">Pending</span>
+                                @endif
+                            </td>
                               <td>{{ $contract->contract_no }}</td>
                               <td>{{ $contract->contract_date }}</td>
                               <td>{{ optional($contract->buyer)->name ?? $contract->buyer_name }}</td>
@@ -58,15 +78,7 @@
                                 @endif
                             </td>
 
-                              <td>
-                                  <a href="{{ route('admin.saleContracts.edit', $contract->id) }}" class="btn btn-sm btn-light"><i class="fas fa-pen text-primary"></i></a>
-                                  <a href="{{ route('admin.saleContracts.view', $contract->id) }}" class="btn btn-sm btn-light" data-bs-toggle="tooltip" title="View">
-                                    <i class="fas fa-eye text-primary"></i>
-                                 </a>
-                                  <a href="{{ route('admin.saleContracts.delete', $contract->id) }}"  onclick="return confirm('Are you sure?')" class="btn btn-sm btn-light" data-bs-toggle="tooltip" title="Delete">
-                                    <i class="fas fa-trash text-danger"></i>
-                                 </a>
-                              </td>
+                             
                           </tr>
                       @endforeach
                   </tbody>

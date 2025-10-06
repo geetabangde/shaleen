@@ -173,7 +173,7 @@
                     <div class="card-body">
                         <div class="table-rep-plugin">
                             <div class="table-responsive mb-0" >
-                                <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
+                                <table class="table table-bordered dt-responsive nowrap w-100">
                                     <thead>
                                         <tr>
                                             <th>#</th>
@@ -198,7 +198,6 @@
                                             <th>Reference No. & Date</th>
                                             <th>Delivery Note</th>
                                             <th>Delivery Note Date</th>
-                                            
                                             <th>Date</th>
                                         </tr>
                                     </thead>
@@ -227,7 +226,6 @@
                                                         {{ ucfirst($sub->status) }}
                                                     @endif
                                                 </td>
-
                                                 <td>{{ $sub->quantity }}</td>
                                                 <td>{{ number_format($sub->sale_price, 2) }}</td>
                                                 <td>{{ $sub->unit ?? '-' }}</td>
@@ -248,7 +246,6 @@
                                                 <td>{{ $sub->delivery_note ?? '-' }}</td>
                                                 <td>{{ $sub->delivery_note_date ?? '-' }}</td>
                                                 <td>{{ $sub->created_at->format('d-m-Y h:i A') }}</td>
-
                                             </tr>
                                         @empty
                                             <tr>

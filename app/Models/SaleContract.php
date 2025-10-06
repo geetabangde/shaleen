@@ -30,7 +30,8 @@ class SaleContract extends Model
         'documents', 
         'document_names',
         'seller_bank_details', 
-        'terms_conditions'
+        'terms_conditions',
+        'status',
     ];
 
      public function buyer()
@@ -42,5 +43,17 @@ class SaleContract extends Model
     public function seller()
     {
         return $this->belongsTo(Admin::class, 'seller_name'); 
+    }
+
+     public function settings()
+    {
+        return $this->hasOne(\App\Models\Setting::class, 'key', 'terms_conditions')
+                    ->where('key', 'terms_conditions');
+    }
+
+    // Or a generic way to fetch any setting
+    public function setting($key)
+    {
+        return \App\Models\Setting::where('key', $key)->first();
     }
 }

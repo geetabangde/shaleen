@@ -121,6 +121,14 @@
                                              value="{{ old('price', $sale->price) }}">
                                        @error('price') <div class="invalid-feedback">{{ $message }}</div> @enderror
                                     </div>
+                                    <!-- unit -->
+                                    <div class="col-md-6">
+                                       <label for="unit" class="form-label">Unit</label>
+                                       <input type="text" name="unit" id="unit"
+                                             class="form-control @error('unit') is-invalid @enderror"
+                                             value="{{ old('unit', $sale->unit) }}">
+                                       @error('unit') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                    </div>
 
                                     <!-- Loading History Pending Balance -->
                                     <div class="col-md-6">

@@ -62,10 +62,8 @@
                                                 </div>
                                                 <div class="modal-body">
                                                       <select name="status" class="form-select" required>
-                                                        
                                                          <option value="Await Delivery" {{ $bag->status == 'Await Delivery' ? 'selected' : '' }}>Await Delivery</option>
                                                          <option value="Delivered" {{ $bag->status == 'Delivered' ? 'selected' : '' }}>Delivered</option>
-                                                        
                                                       </select>
                                                 </div>
                                                 <div class="modal-footer">

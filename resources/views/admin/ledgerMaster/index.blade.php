@@ -13,7 +13,7 @@
             <div class="card-body">
                <div class="table-rep-plugin">
                   <div class="table-responsive mb-0" >
-                     <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
+                      <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
                         <thead>
                            <tr>
                               <th>#</th>

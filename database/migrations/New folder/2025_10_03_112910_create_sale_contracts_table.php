@@ -31,6 +31,10 @@ return new class extends Migration
         $table->text('documents')->nullable();
         $table->text('seller_bank_details')->nullable();
         $table->longText('terms_conditions')->nullable();
+         $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending')->after('documents');
+        $table->text('document_names')->nullable();
+        $table->date('contract_date');
+         $table->foreignId('created_by')->constrained('admins')->onDelete('cascade');
         $table->timestamps();
         });
     }
@@ -40,6 +44,9 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::table('sale_contracts', function (Blueprint $table) {
+        $table->dropColumn('status');
+    });
         Schema::dropIfExists('sale_contracts');
     }
 };

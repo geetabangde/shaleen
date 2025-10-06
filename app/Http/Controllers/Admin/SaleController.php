@@ -26,8 +26,6 @@ class SaleController extends Controller
         $begs = Bag::all();
         $items = ItemMaster::all();
         
-
-        
         $buyers = $ledgers->filter(function($ledger){
             $types = is_array($ledger->types) ? $ledger->types : json_decode($ledger->types, true);
             return in_array('buyer', $types ?? []);
@@ -72,6 +70,7 @@ class SaleController extends Controller
             'bags' => 'required|integer|min:0',
             'brand' => 'nullable|string|max:255',
             'price' => 'required|numeric|min:0',
+            'unit' => 'nullable|string|max:255',
             'remark' => 'nullable|string',
             'loading_history_pending_balance' => 'nullable|string',
         ]);
@@ -131,6 +130,7 @@ class SaleController extends Controller
             'bags' => 'required|exists:bags,id',
             'brand' => 'nullable|string|max:255',
             'price' => 'required|numeric',
+            'unit' => 'nullable|string|max:255',
             'remark' => 'nullable|string|max:500',
             'loading_history_pending_balance' => 'nullable|string|max:255',
         ]);
@@ -245,8 +245,6 @@ class SaleController extends Controller
 
         return back()->with('success', 'Sub Sale marked as delivered successfully!');
     }
-
-
     public function invoice($saleId, $subSaleId = null)
     {
         $sale = Sale::with('subSales', 'broker', 'partyname')->findOrFail($saleId);
