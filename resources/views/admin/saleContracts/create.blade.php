@@ -117,61 +117,60 @@
                            @enderror
                         </div>
                         <!-- documents table -->
-<div class="col-md-12">
-    <label class="form-label">Documents <span class="text-danger">*</span></label>
-    <table class="table table-bordered" id="documents_table">
-        <thead>
-            <tr>
-                <th>Document Name</th>
-                <th>Upload Document</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            @php
-                $defaultDocs = [
-                    '1 Original Invoices',
-                    '3/3 Bill of lading:',
-                    '1 Origine Certificate.',
-                    '1 Phytosanitary Certificate',
-                    '1 Packing List',
-                    '1 Fumigation Certificate',
-                    'Weight & Quality Certificate',
-                    'Conformity Certificate'
-                ];
-            @endphp
+                        <div class="col-md-12">
+                           <label class="form-label">Documents <span class="text-danger">*</span></label>
+                           <table class="table table-bordered" id="documents_table">
+                              <thead>
+                                 <tr>
+                                       <th>Document Name</th>
+                                       <th>Upload Document</th>
+                                       <th>Action</th>
+                                 </tr>
+                              </thead>
+                              <tbody>
+                                 @php
+                                       $defaultDocs = [
+                                          '1 Original Invoices',
+                                          '3/3 Bill of lading:',
+                                          '1 Origine Certificate.',
+                                          '1 Phytosanitary Certificate',
+                                          '1 Packing List',
+                                          '1 Fumigation Certificate',
+                                          'Weight & Quality Certificate',
+                                          'Conformity Certificate'
+                                       ];
+                                 @endphp
 
-            @foreach($defaultDocs as $docName)
-            <tr>
-                <td>
-                    <input type="text" name="document_names[]" class="form-control" value="{{ $docName }}" required>
-                </td>
-                <td>
-                    <input type="file" name="documents[]" class="form-control" required>
-                </td>
-                <td>
-                    <!-- Empty column, action button below -->
-                </td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
+                                 @foreach($defaultDocs as $docName)
+                                 <tr>
+                                       <td>
+                                          <input type="text" name="document_names[]" class="form-control" value="{{ $docName }}" required>
+                                       </td>
+                                       <td>
+                                          <input type="file" name="documents[]" class="form-control" required>
+                                       </td>
+                                       <td>
+                                          <!-- Empty column, action button below -->
+                                       </td>
+                                 </tr>
+                                 @endforeach
+                              </tbody>
+                           </table>
 
-    <!-- Add More button below the table -->
-    <button type="button" class="btn btn-success" id="add_document_btn">➕ Add More</button>
+                           <!-- Add More button below the table -->
+                           <button type="button" class="btn btn-success" id="add_document_btn">➕ Add More</button>
 
-    @error('documents')
-    <div class="text-danger">{{ $message }}</div>
-    @enderror
-    @error('documents.*')
-    <div class="text-danger">{{ $message }}</div>
-    @enderror
-    @error('document_names.*')
-    <div class="text-danger">{{ $message }}</div>
-    @enderror
-</div>
-
-                        <!-- terms and conditions -->
+                           @error('documents')
+                           <div class="text-danger">{{ $message }}</div>
+                           @enderror
+                           @error('documents.*')
+                           <div class="text-danger">{{ $message }}</div>
+                           @enderror
+                           @error('document_names.*')
+                           <div class="text-danger">{{ $message }}</div>
+                           @enderror
+                        </div>
+                        <!-- Terms and Conditions -->
                         <div class="col-md-12">
                            <label for="terms_conditions" class="form-label">Terms & Conditions</label>
                            <textarea class="form-control" id="terms_conditions" name="terms_conditions" rows="4">{{ old('terms_conditions') }}</textarea>
