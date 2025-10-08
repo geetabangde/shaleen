@@ -100,6 +100,35 @@
                         <span data-key="t-purchases">Settings</span>
                     </a>
                 </li>
+                <li>
+                    <a href="javascript:void(0);" class="has-arrow">
+                        <i data-feather="database"></i>
+                        <span data-key="t-user_management">User Management</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                                                        {{-- @if (hasAdminPermission('manage permissions')) --}}
+                        <li><a href="{{ route('admin.permissions.index') }}">Permissions</a></li>
+                        {{-- @endif --}}
+                        {{-- @if (hasAdminPermission('manage role')) --}}
+                        <li><a href="{{ route('admin.role.index') }}">Roles</a></li>
+                        {{-- @endif --}}
+                        
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript:void(0);" class="has-arrow">
+                        <i data-feather="users"></i> {{-- HR icon --}}
+                        <span data-key="t-purchases">HR</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li>
+                            <a href="{{ route('admin.attendances.index') }}">
+                                <i data-feather="user-check"></i> {{-- Attendance icon --}}
+                                <span data-key="t-raw-material">Attendances</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </div>
     </div>

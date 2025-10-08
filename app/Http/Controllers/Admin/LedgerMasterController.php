@@ -110,7 +110,7 @@ class LedgerMasterController extends Controller
 
         $file = $request->file('image');
         $fileName = time() . '_' . $file->getClientOriginalName();
-        $filePath = $file->storeAs('ledger_images', $fileName, 'public');
+        $filePath = $file->storeAs('profile_images', $fileName, 'public');
         $ledgerMaster->image = $filePath;
     }
         $ledgerMaster->name           = $request->name;

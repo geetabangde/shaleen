@@ -9,11 +9,13 @@ use App\Http\Controllers\Admin\PurchaseController;
 use App\Http\Controllers\Admin\SaleController;
 use App\Http\Controllers\Admin\BagController;
 use App\Http\Controllers\Admin\DynamicModulesController;
-// use App\Http\Controllers\Admin\ModuleController;
 use App\Http\Controllers\Admin\ModuleRecordController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\SaleContractController;
 use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\AttendanceController;
+use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\PermissionController;
 
 // Home route
 Route::get('/', fn() => view('welcome'));
@@ -25,9 +27,7 @@ Route::prefix('admin')->group(function () {
     Route::post('/add-register', [LoginController::class, 'store'])->name('admin.newUserRegister');
     Route::post('/login', [LoginController::class, 'login'])->name('admin.login.submit');
     Route::get('/logout', [LoginController::class, 'logout'])->name('admin.logout');
-
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard')->middleware('auth.admin');
-
     Route::get('packing-type', [PackingTypeController::class, 'index'])->name('admin.packingType');
 
     // Ledger Master
@@ -117,11 +117,10 @@ Route::prefix('admin')->group(function () {
     Route::prefix('dynamic-modules')->name('admin.dynamicmodules.')->group(function () {
         Route::get('/', [DynamicModulesController::class, 'index'])->name('index');
         Route::get('create', [DynamicModulesController::class, 'create'])->name('create');
-          Route::get('edit/{module}', [DynamicModulesController::class, 'edit'])->name('edit');
-          Route::get('delete/{module}', [DynamicModulesController::class, 'destroy'])->name('delete');
- 
-         Route::post('update/{module}', [DynamicModulesController::class, 'update'])->name('update');
-          Route::post('store', [DynamicModulesController::class, 'store'])->name('store');
+        Route::get('edit/{module}', [DynamicModulesController::class, 'edit'])->name('edit');
+        Route::get('delete/{module}', [DynamicModulesController::class, 'destroy'])->name('delete');
+        Route::post('update/{module}', [DynamicModulesController::class, 'update'])->name('update');
+        Route::post('store', [DynamicModulesController::class, 'store'])->name('store');
     });
 
     // Modules + Records (nested)
@@ -137,5 +136,33 @@ Route::prefix('admin')->group(function () {
             Route::put('{record}', [ModuleRecordController::class, 'update'])->name('update');
             Route::delete('{record}', [ModuleRecordController::class, 'destroy'])->name('destroy');
         });
+    });
+
+    Route::prefix('attendances')->name('admin.attendances.')->middleware(['check.admin.token','auth.admin'])->group(function () {
+        Route::get('/', [AttendanceController::class, 'index'])->name('index');
+        Route::get('create', [AttendanceController::class, 'create'])->name('create');
+        Route::get('edit/{id}', [AttendanceController::class, 'edit'])->name('edit');
+        Route::get('view/{id}', [AttendanceController::class, 'show'])->name('view');
+        Route::get('delete/{id}', [AttendanceController::class, 'destroy'])->name('delete');
+        Route::post('store', [AttendanceController::class, 'store'])->name('store');
+        Route::post('update/{id}', [AttendanceController::class, 'update'])->name('update');
+        Route::get('update-status/{id}', [AttendanceController::class, 'toggleStatus'])->name('toggleStatus');
+    });
+    Route::prefix('role')->name('admin.role.')->middleware(['check.admin.token','auth.admin'])->group(function () {
+        Route::get('/', [RoleController::class, 'index'])->name('index');
+        Route::get('/create', [RoleController::class, 'create'])->name('create');
+        Route::post('/store', [RoleController::class, 'store'])->name('store');
+        Route::get('/delete/{id}', [RoleController::class, 'destroy'])->name('delete');
+        Route::get('/edit/{id}', [RoleController::class, 'edit'])->name('edit');
+        Route::post('/update/{id}', [RoleController::class, 'update'])->name('update');
+    }); 
+    // Route::prefix('permissions')->middleware('admin.token.session','auth.admin')->group(function () {
+     Route::prefix('permissions')->name('admin.permissions.')->middleware(['check.admin.token','auth.admin'])->group(function () {
+        Route::get('/', [PermissionController::class, 'index'])->name('index');
+        Route::get('/create', [PermissionController::class, 'create'])->name('create');
+        Route::post('/store', [PermissionController::class, 'store'])->name('store');
+        Route::get('/edit/{id}', [PermissionController::class, 'edit'])->name('edit');
+        Route::post('/update/{id}', [PermissionController::class, 'update'])->name('update');
+        Route::get('/delete/{id}', [PermissionController::class, 'destroy'])->name('delete');
     });
 });

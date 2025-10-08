@@ -46,6 +46,7 @@ class Kernel extends HttpKernel
         //secruty 
         'auth.admin' => \App\Http\Middleware\AuthenticateAdmin::class,
         'admin.guest' => \App\Http\Middleware\RedirectIfAuthenticatedAdmin::class,
+       'check.admin.token' => \App\Http\Middleware\CheckTokenAndSession::class,
        //secruty  
         'admin.localize' => \App\Http\Middleware\AdminLocalize::class,
         'checkrole' => \App\Http\Middleware\CheckRole::class,

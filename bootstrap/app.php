@@ -18,6 +18,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'auth.admin' => \App\Http\Middleware\AuthenticateAdmin::class,
             'admin.guest' => \App\Http\Middleware\RedirectIfAuthenticatedAdmin::class,
+            'check.admin.token' => \App\Http\Middleware\CheckTokenAndSession::class,
           
         ]);
     })

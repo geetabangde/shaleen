@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Validator; // ✅ Validator import karein
+use Illuminate\Support\Facades\Validator; 
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
 use Laravel\Sanctum\Sanctum;
@@ -127,7 +127,7 @@ class ApiController extends Controller
                 'message' => 'OTP sent successfully',
                 'otp' => $otp,
                 'user' => $user,
-                'token' => $user->auth_token // ✅ Purana Token Hi Wapas Kiya Jayega, Naya Generate Nahi Hoga
+                'token' => $user->auth_token 
             ], 200);
         } else {
             return response()->json([
